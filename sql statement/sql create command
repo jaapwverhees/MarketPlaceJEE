@@ -1,0 +1,27 @@
+CREATE DATABASE marketplace;
+
+USE marketplace;
+
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';
+
+GRANT ALL PRIVILEGES ON marketplace TO 'root'@'localhost';
+
+-- email as primary?
+
+CREATE TABLE IF NOT EXISTS registred_visitor (
+    visitor_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255),
+    email VARCHAR(255),
+    streetname VARCHAR(255),
+    streetnumber INT,
+    suffix VARCHAR(255),
+    zipcode VARCHAR(6),
+    password VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS delivery_options(
+	visitor_id INT,
+    delivery_option VARCHAR(255),
+    PRIMARY KEY (visitor_id, delivery_option),
+    FOREIGN KEY (visitor_id) REFERENCES registred_visitor(visitor_id)
+);
