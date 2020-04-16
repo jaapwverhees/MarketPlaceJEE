@@ -28,7 +28,7 @@ public class RegistredVisitor {
         this.zipcode = zipcode;
         //TODO when instantiated, the object wil contain an un-hashed password. this will be hashed when put into
         //TODO the database. it could be hashed here, but then the Mailservice should also be called here, with is
-        //TODO probably not desirable.
+        //TODO probably not desirable. BRAM: tsja... weet ik even niet.
         this.password = PassWordGenerator.generatePassword(12);
     }
 

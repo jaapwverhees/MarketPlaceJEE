@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import static com.util.propertiesloader.MyProperties.get;
 
 public class RegisterVisitorController {
-    //TODO could return Json(like) for the hell of it.
+    //TODO could return Json(like) for the hell of it. BRAM: wat is je vraag?
     public String registerVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) {
         RegistredVisitor visitor;
         try {
@@ -25,9 +25,10 @@ public class RegisterVisitorController {
             insertNewRegistredVisitor(visitor);
             sendConfirmationEmail(visitor);
         } catch (Exception e) {
+            // TODO BRAM dit vind ik niet zo mooi. instanceof in catch(exception); beter catch(customexception); sowieso niet zo mooi dat je een foutbericht returnt. kun je beter een exception met de fout erin returnen.
             if (e instanceof CustomException) {
                 return e.getMessage();
-            }//TODO create errorlog
+            }//TODO create errorlog BRAM: je wilt loggen? ga eens kijken naar log4j.
             return "Er heeft een overwachte fout plaatsgevonden";
         }
         return "invoer succesvol! Er is een email verstuurd naar uw opgegeven emailadres";
@@ -42,9 +43,9 @@ public class RegisterVisitorController {
         return new RegistredVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
     }
 
-    //TODO should myUrl be hardcoded, or in a config file of sorts? same for user and password.
+    //TODO should myUrl be hardcoded, or in a config file of sorts? same for user and password. BRAM: properties file
     //TODO should this method be in another class? when underlying database is changed, this class needs to be changed to
-    // and this is not relevant for all functions.
+    // and this is not relevant for all functions. BRAM: je kunt DB-zaken beter in andere klasses doen, bijv. een Dao (zoals dat heet). Het opzetten van een connectie kun je daar dan ook in stoppen, bijv. in een superclass
     //TODO put in check so that empty fields remain null?
     private void insertNewRegistredVisitor(RegistredVisitor visitor) throws SQLException {
         PasswordAuthentication aut = new PasswordAuthentication();
