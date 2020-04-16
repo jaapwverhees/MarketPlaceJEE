@@ -5,6 +5,7 @@ import com.model.RegistredVisitor;
 import com.util.mail.MailService;
 import com.util.exeptions.CustomException;
 import com.util.password.PasswordAuthentication;
+//import static com.util.propertiesloader.MyProperties.get;
 
 import javax.mail.MessagingException;
 import java.sql.Connection;
@@ -12,6 +13,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import static com.util.propertiesloader.MyProperties.get;
 
 public class RegisterVisitorController {
     //TODO could return Json(like) for the hell of it.
@@ -48,12 +51,14 @@ public class RegisterVisitorController {
 
         String myUrl = "jdbc:mysql://localhost:3306/marketplace?serverTimezone=UTC";
         Connection conn = DriverManager.getConnection(myUrl, "root", "root");
+        //TODO fix
+        // Connection conn = DriverManager.getConnection(get("database_url"), get("database_user"), get("database_password"));
 
-        String query = "INSERT INTO registred_visitor (username, email, streetname, streetnumber,suffix, zipcode, password)VALUES (?,?,?,?,?,?,?);";
+        String query = "INSERT INTO registred_visitor (email, username, streetname, streetnumber,suffix, zipcode, password)VALUES (?,?,?,?,?,?,?);";
 
         PreparedStatement preparedStmt = conn.prepareStatement(query);
-        preparedStmt.setString(1, visitor.getUserName());
-        preparedStmt.setString(2, visitor.getEmail());
+        preparedStmt.setString(1, visitor.getEmail());
+        preparedStmt.setString(2, visitor.getUserName());
         preparedStmt.setString(3, visitor.getStreetName());
         preparedStmt.setInt(4, visitor.getStreetNumber());
         preparedStmt.setString(5, visitor.getSuffix());
@@ -62,6 +67,28 @@ public class RegisterVisitorController {
 
         preparedStmt.execute();
 
+        conn.close();
+    }
+
+    //TODO another class?
+    private void insertNewDeliveryOptions(RegistredVisitor visitor) throws SQLException {
+        PasswordAuthentication aut = new PasswordAuthentication();
+        //TODO make global static final
+        String myUrl = "jdbc:mysql://localhost:3306/marketplace?serverTimezone=UTC";
+        Connection conn = DriverManager.getConnection(myUrl, "root", "root");
+        //TODO fix
+        // Connection conn = DriverManager.getConnection(get("database_url"), get("database_user"), get("database_password"));
+
+        for (DeliveryOption option: visitor.getDeliveryOptions()) {
+            String query = "INSERT INTO delivery_options (visitor_id, delivery_option)VALUES (?,?);";
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, visitor.getEmail());
+            preparedStmt.setString(2, option.toString());
+            preparedStmt.execute();
+
+            preparedStmt.close();
+        }
         conn.close();
     }
 
