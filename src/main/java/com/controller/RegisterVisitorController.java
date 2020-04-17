@@ -2,10 +2,9 @@ package com.controller;
 
 import com.model.DeliveryOption;
 import com.model.RegistredVisitor;
-import com.util.mail.MailService;
 import com.util.exeptions.CustomException;
+import com.util.mail.MailService;
 import com.util.password.PasswordAuthentication;
-//import static com.util.propertiesloader.MyProperties.get;
 
 import javax.mail.MessagingException;
 import java.sql.Connection;
@@ -16,6 +15,8 @@ import java.util.ArrayList;
 
 import static com.util.propertiesloader.MyProperties.get;
 
+
+//TODO implement RVDAO
 public class RegisterVisitorController {
     //TODO could return Json(like) for the hell of it.
     public String registerVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) {
@@ -23,6 +24,7 @@ public class RegisterVisitorController {
         try {
             visitor = createRegisteredVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
             insertNewRegistredVisitor(visitor);
+            insertNewDeliveryOptions(visitor);
             sendConfirmationEmail(visitor);
         } catch (Exception e) {
             if (e instanceof CustomException) {
@@ -42,17 +44,12 @@ public class RegisterVisitorController {
         return new RegistredVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
     }
 
-    //TODO should myUrl be hardcoded, or in a config file of sorts? same for user and password.
     //TODO should this method be in another class? when underlying database is changed, this class needs to be changed to
     // and this is not relevant for all functions.
     //TODO put in check so that empty fields remain null?
     private void insertNewRegistredVisitor(RegistredVisitor visitor) throws SQLException {
         PasswordAuthentication aut = new PasswordAuthentication();
-
-        String myUrl = "jdbc:mysql://localhost:3306/marketplace?serverTimezone=UTC";
-        Connection conn = DriverManager.getConnection(myUrl, "root", "root");
-        //TODO fix
-        // Connection conn = DriverManager.getConnection(get("database_url"), get("database_user"), get("database_password"));
+        Connection conn = DriverManager.getConnection(get("database.url"), get("database.user"), get("database.password"));
 
         String query = "INSERT INTO registred_visitor (email, username, streetname, streetnumber,suffix, zipcode, password)VALUES (?,?,?,?,?,?,?);";
 
@@ -71,26 +68,6 @@ public class RegisterVisitorController {
     }
 
     //TODO another class?
-    private void insertNewDeliveryOptions(RegistredVisitor visitor) throws SQLException {
-        PasswordAuthentication aut = new PasswordAuthentication();
-        //TODO make global static final
-        String myUrl = "jdbc:mysql://localhost:3306/marketplace?serverTimezone=UTC";
-        Connection conn = DriverManager.getConnection(myUrl, "root", "root");
-        //TODO fix
-        // Connection conn = DriverManager.getConnection(get("database_url"), get("database_user"), get("database_password"));
-
-        for (DeliveryOption option: visitor.getDeliveryOptions()) {
-            String query = "INSERT INTO delivery_options (visitor_id, delivery_option)VALUES (?,?);";
-
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, visitor.getEmail());
-            preparedStmt.setString(2, option.toString());
-            preparedStmt.execute();
-
-            preparedStmt.close();
-        }
-        conn.close();
-    }
 
     private void sendConfirmationEmail(RegistredVisitor visitor) throws MessagingException {
         MailService.sendMail(visitor.getEmail(), "succesvol geregistreerd by BDmarketplace",

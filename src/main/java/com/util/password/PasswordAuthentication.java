@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 
 //TODO i dont quite get this class yet.
-//TODO pro's and con's static vs non-static here.
 public final class PasswordAuthentication {
 
     public static final String ID = "$31$";

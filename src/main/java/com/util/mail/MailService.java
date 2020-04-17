@@ -19,7 +19,7 @@ public class MailService {
     private static final String EMAIL_FROM = "thebdmarketplace@gmail.com";
 
 
-    //TODO pro's and con's static vs non-static here.
+
     //TODO pro's and con's throws exception vs try-catch
     public static void sendMail(String emailTo, String subject, String emailText) throws MessagingException {
 

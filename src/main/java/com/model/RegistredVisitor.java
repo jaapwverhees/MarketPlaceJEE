@@ -9,6 +9,7 @@ public class RegistredVisitor {
     private String userName;
     private String email;
     private ArrayList<DeliveryOption> deliveryOptions;
+    //TODO adress object??
     private String streetName;
     private int streetNumber;
     private String suffix;
