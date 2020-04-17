@@ -13,9 +13,9 @@ import static com.util.propertiesloader.MyProperties.get;
 
 public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
 
-    private PreparedStatement preparedStmt;
     private Connection conn;
-    private PasswordAuthentication aut;
+
+    private final PasswordAuthentication aut = new PasswordAuthentication();
 
     @Override
     public RegistredVisitor getRegisteredVisitor(String email) throws Exception {
@@ -24,26 +24,24 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
 
     @Override
     public void addRegistredVisitor(RegistredVisitor visitor) throws Exception {
-        aut = new PasswordAuthentication();
+
         conn = DriverManager.getConnection(get("database.url"), get("database.user"), get("database.password"));
 
         String query = "INSERT INTO registred_visitor (email, username, streetname, streetnumber,suffix, zipcode, password)VALUES (?,?,?,?,?,?,?);";
 
-        preparedStmt = conn.prepareStatement(query);
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
         preparedStmt.setString(1, visitor.getEmail());
         preparedStmt.setString(2, visitor.getUserName());
-        preparedStmt.setString(3, visitor.getStreetName());
-        preparedStmt.setInt(4, visitor.getStreetNumber());
-        preparedStmt.setString(5, visitor.getSuffix());
-        preparedStmt.setString(6, visitor.getZipcode());
+        preparedStmt.setString(3, visitor.getAddress().getStreetName());
+        preparedStmt.setInt(4, visitor.getAddress().getStreetNumber());
+        preparedStmt.setString(5, visitor.getAddress().getSuffix());
+        preparedStmt.setString(6, visitor.getAddress().getZipcode());
         preparedStmt.setString(7, aut.hash(visitor.getPassword()));
 
         preparedStmt.execute();
 
         conn.close();
 
-        //TODO what is wisdom. can i give the connection to the insertNewDeliveryOptions method?
-        // i think that it is more neat to close the connection here and reopen it in the next method.
         insertNewDeliveryOptions(visitor);
     }
 

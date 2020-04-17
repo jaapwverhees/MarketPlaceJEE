@@ -11,6 +11,6 @@ public class App {
         ArrayList<DeliveryOption> options = new ArrayList<>();
         options.add(DeliveryOption.PICKUPFROMHOME);
         RegisterVisitorController controller = new RegisterVisitorController();
-        controller.registerVisitor("tjapie", "jaap6@gmail.com", options, "Streetname", 12, "A", "5050AZ");
+        controller.registerVisitor("tjapie", "jaap7@gmail.com", options, "Streetname", 12, "A", "5050AZ");
     }
 }
