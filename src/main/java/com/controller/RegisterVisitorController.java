@@ -2,37 +2,76 @@ package com.controller;
 
 import com.controller.DAO.RegisteredVisitorDAO;
 import com.controller.DAO.RegisteredVisitorDAOable;
-import com.controller.factory.RegisteredVisitorFactory;
 import com.model.DeliveryOption;
 import com.model.RegistredVisitor;
+import com.util.ErrorLogger;
 import com.util.exeptions.CustomException;
 import com.util.mail.MailService;
+
 import javax.mail.MessagingException;
 import java.util.ArrayList;
 
+
 public class RegisterVisitorController {
 
-    private final RegisteredVisitorDAOable registeredVisitorDAO = new RegisteredVisitorDAO();
+    private RegisteredVisitorDAOable registeredVisitorDAO = new RegisteredVisitorDAO();
 
+    //TODO how to test without setter
+    public void setRegisteredVisitorDAO(RegisteredVisitorDAOable registeredVisitorDAO) {
+        this.registeredVisitorDAO = registeredVisitorDAO;
+    }
 
-    //TODO return json (LP)
-    //TODO in MVC i believe that the should have no knowledge of the models, so it would not be mvc to expect list of deliveryOptions.
-    public String registerVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) {
+    public String registerVisitorWithAddressAndSuffix(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) {
 
         try {
-            RegistredVisitor visitor = new RegisteredVisitorFactory().create(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
-            registeredVisitorDAO.addRegistredVisitor(visitor);
-            sendConfirmationEmail(visitor);
+            RegistredVisitor registredVisitor = new RegistredVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
+            registeredVisitorDAO.addRegistredVisitor(registredVisitor);
+            sendConfirmationEmail(registredVisitor);
         } catch (Exception e) {
             if (e instanceof CustomException) {
                 return e.getMessage();
-            }//TODO create errorlog
-            return "Er heeft een overwachte fout plaatsgevonden";
+            } else {
+                ErrorLogger.create(e);
+                return "Er heeft een overwachte fout plaatsgevonden";
+            }
         }
         return "invoer succesvol! Er is een email verstuurd naar uw opgegeven emailadres";
     }
 
-    //TODO how to mock private methods
+    public String registerVisitorWithAddressWithoutSuffix(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) {
+
+        try {
+            RegistredVisitor registredVisitor = new RegistredVisitor(userName, email, deliveryOptions, streetName, streetNumber, zipcode);
+            registeredVisitorDAO.addRegistredVisitor(registredVisitor);
+            sendConfirmationEmail(registredVisitor);
+        } catch (Exception e) {
+            if (e instanceof CustomException) {
+                return e.getMessage();
+            } else {
+                ErrorLogger.create(e);
+                return "Er heeft een overwachte fout plaatsgevonden";
+            }
+        }
+        return "invoer succesvol! Er is een email verstuurd naar uw opgegeven emailadres";
+    }
+
+    public String registerVisitorWithoutAddress(String userName, String email, ArrayList<DeliveryOption> deliveryOptions) {
+
+        try {
+            RegistredVisitor registredVisitor = new RegistredVisitor(userName, email, deliveryOptions);
+            registeredVisitorDAO.addRegistredVisitor(registredVisitor);
+            sendConfirmationEmail(registredVisitor);
+        } catch (Exception e) {
+            if (e instanceof CustomException) {
+                return e.getMessage();
+            } else {
+                ErrorLogger.create(e);
+                return "Er heeft een overwachte fout plaatsgevonden";
+            }
+        }
+        return "invoer succesvol! Er is een email verstuurd naar uw opgegeven emailadres";
+    }
+
     private void sendConfirmationEmail(RegistredVisitor visitor) throws MessagingException {
         MailService.sendMail(visitor.getEmail(), "succesvol geregistreerd by BDmarketplace",
                 String.format("Beste %s,\n" +

@@ -1,5 +1,7 @@
 package com.util.propertiesloader;
 
+import com.util.ErrorLogger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -12,7 +14,7 @@ public class MyProperties {
         try (InputStream input = com.util.propertiesloader.MyProperties.class.getClassLoader().getResourceAsStream("database.properties")) {
             prop.load(input);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ErrorLogger.create(ex);
         }
     }
 

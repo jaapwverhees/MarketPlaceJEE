@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T16:59:48.924296500Z</date>
+  <millis>1587142788924</millis>
+  <nanos>296500</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test
+[Ljava.lang.StackTraceElement;@27fa135a</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T17:03:59.689924600Z</date>
+  <millis>1587143039689</millis>
+  <nanos>924600</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test</message>
+  <exception>
+    <message>com.util.exeptions.CustomException: test</message>
+    <frame>
+      <class>com.App</class>
+      <method>main</method>
+      <line>18</line>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T17:06:41.570860900Z</date>
+  <millis>1587143201570</millis>
+  <nanos>860900</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test</message>
+  <exception>
+    <message>com.util.exeptions.CustomException: test</message>
+    <frame>
+      <class>com.App</class>
+      <method>main</method>
+      <line>18</line>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T17:11:05.755824Z</date>
+  <millis>1587143465755</millis>
+  <nanos>824000</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test
+[Ljava.lang.StackTraceElement;@27fa135a</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T17:11:51.648416900Z</date>
+  <millis>1587143511648</millis>
+  <nanos>416900</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test
+[Ljava.lang.StackTraceElement;@27fa135a</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T17:12:54.621455800Z</date>
+  <millis>1587143574621</millis>
+  <nanos>455800</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test
+[Ljava.lang.StackTraceElement;@27fa135a</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T17:13:36.533265600Z</date>
+  <millis>1587143616533</millis>
+  <nanos>265600</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test
+[Ljava.lang.StackTraceElement;@27fa135a</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T17:17:22.571956Z</date>
+  <millis>1587143842571</millis>
+  <nanos>956000</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test
+[Ljava.lang.StackTraceElement;@27fa135a</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T17:18:41.116207400Z</date>
+  <millis>1587143921116</millis>
+  <nanos>207400</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test
+[com.App.main(App.java:18)]</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-17T17:18:59.598332Z</date>
+  <millis>1587143939598</millis>
+  <nanos>332000</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>test
+[com.App.main(App.java:18)]</message>
+</record>
+</log>
