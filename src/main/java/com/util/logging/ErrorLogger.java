@@ -1,4 +1,4 @@
-package com.util;
+package com.util.logging;
 
 import java.io.IOException;
 import java.util.Arrays;

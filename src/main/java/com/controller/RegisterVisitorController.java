@@ -4,7 +4,7 @@ import com.controller.DAO.RegisteredVisitorDAO;
 import com.controller.DAO.RegisteredVisitorDAOable;
 import com.model.DeliveryOption;
 import com.model.RegistredVisitor;
-import com.util.ErrorLogger;
+import com.util.logging.ErrorLogger;
 import com.util.exeptions.CustomException;
 import com.util.mail.MailService;
 

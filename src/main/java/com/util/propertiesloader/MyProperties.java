@@ -1,6 +1,6 @@
 package com.util.propertiesloader;
 
-import com.util.ErrorLogger;
+import com.util.logging.ErrorLogger;
 
 import java.io.IOException;
 import java.io.InputStream;

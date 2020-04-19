@@ -13,7 +13,7 @@ import static com.util.propertiesloader.MyProperties.get;
 public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
 
     private final PasswordAuthentication aut = new PasswordAuthentication();
-    
+
     private Connection conn;
 
     @Override
