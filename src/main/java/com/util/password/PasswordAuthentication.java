@@ -34,6 +34,7 @@ public final class PasswordAuthentication {
     }
 
     public PasswordAuthentication(int cost) {
+        //noinspection ResultOfMethodCallIgnored
         iterations(cost); /* Validate cost */
         this.cost = cost;
         this.random = new SecureRandom();

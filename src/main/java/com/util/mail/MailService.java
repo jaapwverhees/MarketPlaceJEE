@@ -13,12 +13,14 @@ import java.util.Properties;
 public class MailService {
 
     private static final String SMTP_SERVER = "smtp.gmail.com.";
+
     private static final String USERNAME = "thebdmarketplace@gmail.com";
+
     private static final String PASSWORD = "ZeroCool01#";
 
     private static final String EMAIL_FROM = "thebdmarketplace@gmail.com";
 
-    public static void sendMail(String emailTo, String subject, String emailText) throws MessagingException {
+    public void sendMail(String emailTo, String subject, String emailText) throws MessagingException {
 
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);

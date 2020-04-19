@@ -182,3 +182,88 @@
 [com.App.main(App.java:18)]</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-19T12:27:35.218420300Z</date>
+  <millis>1587299255218</millis>
+  <nanos>420300</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-19T12:28:15.278889200Z</date>
+  <millis>1587299295278</millis>
+  <nanos>889200</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-19T12:30:34.611543Z</date>
+  <millis>1587299434611</millis>
+  <nanos>543000</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-19T12:30:53.947181800Z</date>
+  <millis>1587299453947</millis>
+  <nanos>181800</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-04-19T12:31:13.804505800Z</date>
+  <millis>1587299473804</millis>
+  <nanos>505800</nanos>
+  <sequence>0</sequence>
+  <logger>com.util.ErrorLogger</logger>
+  <level>WARNING</level>
+  <class>com.util.ErrorLogger</class>
+  <method>create</method>
+  <thread>1</thread>
+  <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+</record>
+</log>

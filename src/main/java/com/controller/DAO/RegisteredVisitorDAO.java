@@ -5,7 +5,6 @@ import com.model.RegistredVisitor;
 import com.util.password.PasswordAuthentication;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +13,7 @@ import static com.util.propertiesloader.MyProperties.get;
 public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
 
     private final PasswordAuthentication aut = new PasswordAuthentication();
+    
     private Connection conn;
 
     @Override
@@ -107,6 +107,7 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
     }
 
     private Set<DeliveryOption> getDeliveryOptions(String email) throws SQLException {
+
         conn = DriverManager.getConnection(get("database.url"), get("database.user"), get("database.password"));
 
         String query = "SELECT * FROM delivery_options WHERE visitor_id = ?";
