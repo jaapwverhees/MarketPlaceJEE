@@ -21,7 +21,7 @@ class RegistredVisitorTest {
     void setUp() throws CustomException {
 
         array = new HashSet<>();
-        array.add(DeliveryOption.PICKUPFROMHOME);
+        array.add(DeliveryOption.WAREHOUSE);
 
         visitor = new RegistredVisitor("jaap", "Jaapie@japie.com", array, "street", 12, "A", "0000AZ");
     }

@@ -32,7 +32,7 @@ class RegisterVisitorControllerTest {
     @BeforeEach
     void setUp() throws Exception {
 
-        array.add(DeliveryOption.PICKUPFROMHOME);
+        array.add(DeliveryOption.WAREHOUSE);
 
         controller.setRegisteredVisitorDAO(DOA);
         doNothing().when(DOA).addRegistredVisitor(any());
