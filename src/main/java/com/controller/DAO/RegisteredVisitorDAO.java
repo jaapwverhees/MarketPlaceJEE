@@ -6,6 +6,8 @@ import com.util.password.PasswordAuthentication;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.util.propertiesloader.MyProperties.get;
 
@@ -17,7 +19,7 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
     @Override
     public RegistredVisitor getRegisteredVisitor(String email) throws Exception {
 
-        ArrayList<DeliveryOption> deliveryOptions = getDeliveryOptions(email);
+        Set<DeliveryOption> deliveryOptions = getDeliveryOptions(email);
 
         conn = DriverManager.getConnection(get("database.url"), get("database.user"), get("database.password"));
 
@@ -104,7 +106,7 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
         conn.close();
     }
 
-    private ArrayList<DeliveryOption> getDeliveryOptions(String email) throws SQLException {
+    private Set<DeliveryOption> getDeliveryOptions(String email) throws SQLException {
         conn = DriverManager.getConnection(get("database.url"), get("database.user"), get("database.password"));
 
         String query = "SELECT * FROM delivery_options WHERE visitor_id = ?";
@@ -113,7 +115,7 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
 
         preparedStmt.setString(1, email);
         ResultSet resultSet = preparedStmt.executeQuery();
-        ArrayList<DeliveryOption> deliveryOptions = new ArrayList<>();
+        Set<DeliveryOption> deliveryOptions = new HashSet<>();
 
         while (resultSet.next()) {
             deliveryOptions.add(DeliveryOption.valueOf(resultSet.getString("delivery_option")));

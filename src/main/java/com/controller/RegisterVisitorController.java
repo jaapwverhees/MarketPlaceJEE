@@ -10,6 +10,7 @@ import com.util.mail.MailService;
 
 import javax.mail.MessagingException;
 import java.util.ArrayList;
+import java.util.Set;
 
 
 public class RegisterVisitorController {
@@ -21,7 +22,7 @@ public class RegisterVisitorController {
         this.registeredVisitorDAO = registeredVisitorDAO;
     }
 
-    public String registerVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) {
+    public String registerVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) {
 
         try {
             RegistredVisitor registredVisitor = new RegistredVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
@@ -38,7 +39,7 @@ public class RegisterVisitorController {
         return "invoer succesvol! Er is een email verstuurd naar uw opgegeven emailadres";
     }
 
-    public String registerVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) {
+    public String registerVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) {
 
         try {
             RegistredVisitor registredVisitor = new RegistredVisitor(userName, email, deliveryOptions, streetName, streetNumber, zipcode);
@@ -55,7 +56,7 @@ public class RegisterVisitorController {
         return "invoer succesvol! Er is een email verstuurd naar uw opgegeven emailadres";
     }
 
-    public String registerVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions) {
+    public String registerVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions) {
 
         try {
             RegistredVisitor registredVisitor = new RegistredVisitor(userName, email, deliveryOptions);
@@ -64,7 +65,10 @@ public class RegisterVisitorController {
         } catch (Exception e) {
             if (e instanceof CustomException) {
                 return e.getMessage();
-            } else {
+            } else if(e instanceof MessagingException){
+                ErrorLogger.create(e);
+                return "Er heeft een fout plaats gevonden, en uw wachtwoord kan niet worden verzonden. Er word contact met u opgenomen";
+            }else {
                 ErrorLogger.create(e);
                 return "Er heeft een overwachte fout plaatsgevonden";
             }

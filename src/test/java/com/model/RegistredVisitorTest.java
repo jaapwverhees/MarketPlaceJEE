@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -13,11 +15,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 class RegistredVisitorTest {
 
     RegistredVisitor visitor;
-    ArrayList<DeliveryOption> array;
+    Set<DeliveryOption> array;
 
     @BeforeEach
     void setUp() {
-        array = new ArrayList<>();
+        array = new HashSet<>();
         array.add(DeliveryOption.PICKUPFROMHOME);
         try {
             visitor = new RegistredVisitor("jaap", "Jaapie@japie.com", array, "street", 12, "A", "0000AZ");
@@ -27,7 +29,7 @@ class RegistredVisitorTest {
     }
 
     @Test
-    public void callAllConstructorsInvalidEmail(){
+    public void callAllConstructorsInvalidEmail() {
         Throwable exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@com", array, "street", 12, "A", "0000AZ"));
         Assertions.assertEquals("String email is invalid", exception.getMessage());
 
@@ -37,7 +39,8 @@ class RegistredVisitorTest {
         exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@com", array));
         Assertions.assertEquals("String email is invalid", exception.getMessage());
     }
-    public void callConstructorsInvalidStreetNumberZero(){
+
+    public void callConstructorsInvalidStreetNumberZero() {
         Throwable exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@jaap.com", array, "street", 0, "A", "0000AZ"));
         Assertions.assertEquals("String email is invalid", exception.getMessage());
 
@@ -46,8 +49,8 @@ class RegistredVisitorTest {
     }
 
     @Test
-    public void callConstructorsInvalidEmptyArrayList(){
-        ArrayList<DeliveryOption> array = new ArrayList<>();
+    public void callConstructorsInvalidEmptyArrayList() {
+        Set<DeliveryOption> array = new HashSet<>();
         Throwable exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@jaap.com", array, "street", 0, "A", "0000AZ"));
         Assertions.assertEquals("Must contain DeliveryOption", exception.getMessage());
 
@@ -78,7 +81,7 @@ class RegistredVisitorTest {
 
     @Test
     void invalidObjectCreationEmptyArray() {
-        array = new ArrayList<>();
+        array = new HashSet<>();
         Throwable exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@japie.com", array, "street", 12, "A", "0000AZ"));
         Assertions.assertEquals("Must contain DeliveryOption", exception.getMessage());
     }

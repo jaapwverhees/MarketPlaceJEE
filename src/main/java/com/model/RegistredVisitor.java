@@ -4,17 +4,18 @@ package com.model;
 import com.util.password.PassWordGenerator;
 import com.util.exeptions.CustomException;
 
-import java.util.ArrayList;
+import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 public class RegistredVisitor {
     private String userName;
     private String email;
-    private ArrayList<DeliveryOption> deliveryOptions;
+    private Set<DeliveryOption> deliveryOptions;
     private Address address;
     private String password;
 
-    public RegistredVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) throws CustomException {
+    public RegistredVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) throws CustomException {
         if (deliveryOptions.isEmpty()) throw new CustomException("Must contain DeliveryOption");
         if (!emailIsValid(email)) throw new CustomException("String email is invalid");
         this.userName = userName;
@@ -24,7 +25,7 @@ public class RegistredVisitor {
         this.password = PassWordGenerator.generatePassword(12);
     }
     //TODO Arraylist should we something that only contains uniques, set?
-    public RegistredVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) throws CustomException {
+    public RegistredVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) throws CustomException {
         if (deliveryOptions.isEmpty()) throw new CustomException("Must contain DeliveryOption");
         if (!emailIsValid(email)) throw new CustomException("String email is invalid");
         this.userName = userName;
@@ -34,7 +35,7 @@ public class RegistredVisitor {
         this.password = PassWordGenerator.generatePassword(12);
     }
 
-    public RegistredVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions) throws CustomException {
+    public RegistredVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions) throws CustomException {
         if (deliveryOptions.isEmpty()) throw new CustomException("Must contain DeliveryOption");
         if (!emailIsValid(email)) throw new CustomException("String email is invalid");
         this.userName = userName;
@@ -63,7 +64,7 @@ public class RegistredVisitor {
         }
     }
 
-    public ArrayList<DeliveryOption> getDeliveryOptions() {
+    public Set<DeliveryOption> getDeliveryOptions() {
         return deliveryOptions;
     }
 

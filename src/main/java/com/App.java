@@ -6,7 +6,7 @@ import com.controller.VisitorLoginController;
 import com.model.DeliveryOption;
 import com.model.RegistredVisitor;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class App {
 
@@ -16,7 +16,12 @@ public class App {
 //        RegisterVisitorController controller = new RegisterVisitorController();
 //        controller.registerVisitorWithAddressAndSuffix("tjapie", "userjaap@gmail.com", options, "Streetname", 12, "A", "5050AZ");
 
-        VisitorLoginController login = new VisitorLoginController();
-        System.out.println(login.login("userjaap@gmail.com", "uz6!19P^9y#v").getUserName());
+//        VisitorLoginController login = new VisitorLoginController();
+//        System.out.println(login.login("userjaap@gmail.com", "uz6!19P^9y#v").getUserName());
+        Set<DeliveryOption> set = new HashSet<>();
+        set.add(DeliveryOption.WAREHOUSE);
+        set.add(DeliveryOption.WAREHOUSE);
+        set.add(DeliveryOption.PICKUPFROMHOME);
+        System.out.println(set.toString());
     }
 }

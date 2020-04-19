@@ -5,9 +5,9 @@ import com.controller.DAO.RegisteredVisitorDAOable;
 import com.model.DeliveryOption;
 import com.model.RegistredVisitor;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -25,7 +25,7 @@ class RegisterVisitorControllerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        ArrayList<DeliveryOption> array = new ArrayList<>();
+        Set<DeliveryOption> array = new HashSet<>();
         array.add(DeliveryOption.PICKUPFROMHOME);
         RegistredVisitor visitor = new RegistredVisitor("jaap", "Jaapie@japie.com", array, "street", 12, "A", "0000AZ");
         doNothing().when(DOA).addRegistredVisitor(visitor);
