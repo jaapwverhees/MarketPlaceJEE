@@ -27,6 +27,38 @@ class RegistredVisitorTest {
     }
 
     @Test
+    public void callAllConstructorsInvalidEmail(){
+        Throwable exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@com", array, "street", 12, "A", "0000AZ"));
+        Assertions.assertEquals("String email is invalid", exception.getMessage());
+
+        exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@com", array, "street", 12, "0000AZ"));
+        Assertions.assertEquals("String email is invalid", exception.getMessage());
+
+        exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@com", array));
+        Assertions.assertEquals("String email is invalid", exception.getMessage());
+    }
+    public void callConstructorsInvalidStreetNumberZero(){
+        Throwable exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@jaap.com", array, "street", 0, "A", "0000AZ"));
+        Assertions.assertEquals("String email is invalid", exception.getMessage());
+
+        exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@jaap.com", array, "street", 0, "0000AZ"));
+        Assertions.assertEquals("String email is invalid", exception.getMessage());
+    }
+
+    @Test
+    public void callConstructorsInvalidEmptyArrayList(){
+        ArrayList<DeliveryOption> array = new ArrayList<>();
+        Throwable exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@jaap.com", array, "street", 0, "A", "0000AZ"));
+        Assertions.assertEquals("Must contain DeliveryOption", exception.getMessage());
+
+        exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@jaap.com", array, "street", 0, "0000AZ"));
+        Assertions.assertEquals("Must contain DeliveryOption", exception.getMessage());
+
+        exception = assertThrows(Exception.class, () -> visitor = new RegistredVisitor("jaap", "Jaapie@jaap.com", array));
+        Assertions.assertEquals("Must contain DeliveryOption", exception.getMessage());
+    }
+
+    @Test
     void setInvalidEmailAddressNoSuffix() {
         Throwable exception = assertThrows(Exception.class, () -> visitor.setEmail("test@test"));
         Assertions.assertEquals("String email is invalid", exception.getMessage());

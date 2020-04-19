@@ -23,7 +23,7 @@ public class RegistredVisitor {
         this.address = new Address(streetName, streetNumber, suffix,zipcode);
         this.password = PassWordGenerator.generatePassword(12);
     }
-
+    //TODO Arraylist should we something that only contains uniques, set?
     public RegistredVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) throws CustomException {
         if (deliveryOptions.isEmpty()) throw new CustomException("Must contain DeliveryOption");
         if (!emailIsValid(email)) throw new CustomException("String email is invalid");

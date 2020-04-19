@@ -21,7 +21,7 @@ public class RegisterVisitorController {
         this.registeredVisitorDAO = registeredVisitorDAO;
     }
 
-    public String registerVisitorWithAddressAndSuffix(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) {
+    public String registerVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) {
 
         try {
             RegistredVisitor registredVisitor = new RegistredVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
@@ -38,7 +38,7 @@ public class RegisterVisitorController {
         return "invoer succesvol! Er is een email verstuurd naar uw opgegeven emailadres";
     }
 
-    public String registerVisitorWithAddressWithoutSuffix(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) {
+    public String registerVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) {
 
         try {
             RegistredVisitor registredVisitor = new RegistredVisitor(userName, email, deliveryOptions, streetName, streetNumber, zipcode);
@@ -55,7 +55,7 @@ public class RegisterVisitorController {
         return "invoer succesvol! Er is een email verstuurd naar uw opgegeven emailadres";
     }
 
-    public String registerVisitorWithoutAddress(String userName, String email, ArrayList<DeliveryOption> deliveryOptions) {
+    public String registerVisitor(String userName, String email, ArrayList<DeliveryOption> deliveryOptions) {
 
         try {
             RegistredVisitor registredVisitor = new RegistredVisitor(userName, email, deliveryOptions);

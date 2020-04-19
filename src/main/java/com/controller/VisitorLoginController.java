@@ -13,11 +13,12 @@ public class VisitorLoginController {
     PasswordAuthentication aut = new PasswordAuthentication();
 
     //TODO data transfer object?
-    //todo return map with object and message?
+    //TODO return map with object and message?
     public RegistredVisitor login(String email, String password) {
         try {
             RegistredVisitor registeredVisitor = registeredVisitorDAO.getRegisteredVisitor(email);
             if(aut.authenticate(password.toCharArray(), registeredVisitor.getPassword())){
+                registeredVisitor.setPassword(password);
                 return registeredVisitor;
             }
         } catch (Exception exception) {
@@ -25,5 +26,10 @@ public class VisitorLoginController {
 
         }
         return null;
+    }
+
+    //TODO setters are for testing, find way to test without setters
+    public void setRegisteredVisitorDAO(RegisteredVisitorDAOable registeredVisitorDAO) {
+        this.registeredVisitorDAO = registeredVisitorDAO;
     }
 }
