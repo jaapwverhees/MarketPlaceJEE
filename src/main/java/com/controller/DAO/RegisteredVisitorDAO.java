@@ -16,12 +16,18 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
 
     private Connection conn;
 
+    private String databaseURL = get("database.url");
+
+    private String databaseUser = get("database.user");
+
+    private String databasePassword = get("database.password");
+
     @Override
     public RegistredVisitor getRegisteredVisitor(String email) throws Exception {
 
         Set<DeliveryOption> deliveryOptions = getDeliveryOptions(email);
 
-        conn = DriverManager.getConnection(get("database.url"), get("database.user"), get("database.password"));
+        conn = DriverManager.getConnection(databaseURL, databaseUser, databasePassword);
 
         String query = "SELECT * FROM registred_visitor WHERE email = ?";
 
@@ -56,7 +62,7 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
     @Override
     public void addRegistredVisitor(RegistredVisitor visitor) throws Exception {
 
-        conn = DriverManager.getConnection(get("database.url"), get("database.user"), get("database.password"));
+        conn = DriverManager.getConnection(databaseURL, databaseUser, databasePassword);
 
         String query = "INSERT INTO registred_visitor (email, username, streetname, streetnumber,suffix, zipcode, password)VALUES (?,?,?,?,?,?,?);";
 
@@ -91,7 +97,7 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
 
     private void insertNewDeliveryOptions(RegistredVisitor visitor) throws SQLException {
 
-        conn = DriverManager.getConnection(get("database.url"), get("database.user"), get("database.password"));
+        conn = DriverManager.getConnection(databaseURL, databaseUser, databasePassword);
 
         for (DeliveryOption option : visitor.getDeliveryOptions()) {
             String query = "INSERT INTO delivery_options (visitor_id, delivery_option)VALUES (?,?);";
@@ -108,7 +114,7 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
 
     private Set<DeliveryOption> getDeliveryOptions(String email) throws SQLException {
 
-        conn = DriverManager.getConnection(get("database.url"), get("database.user"), get("database.password"));
+        conn = DriverManager.getConnection(databaseURL, databaseUser, databasePassword);
 
         String query = "SELECT * FROM delivery_options WHERE visitor_id = ?";
 
@@ -125,5 +131,18 @@ public class RegisteredVisitorDAO implements RegisteredVisitorDAOable {
         conn.close();
 
         return deliveryOptions;
+    }
+
+    //TODO For testing purposes, figure out how to without setters
+    public void setDatabaseURL(String databaseURL) {
+        this.databaseURL = databaseURL;
+    }
+
+    public void setDatabaseUser(String databaseUser) {
+        this.databaseUser = databaseUser;
+    }
+
+    public void setDatabasePassword(String databasePassword) {
+        this.databasePassword = databasePassword;
     }
 }
