@@ -29,6 +29,7 @@ public class H2Database {
                     "    FOREIGN KEY (visitor_id) REFERENCES registred_visitor(email)\n" +
                     ");");
             stmt.executeUpdate("INSERT INTO registred_visitor ( email, username ) VALUES ( 'test@test.nl', 'test' )");
+            stmt.executeUpdate("INSERT INTO delivery_options ( visitor_id, delivery_option ) VALUES ( 'test@test.nl', 'WAREHOUSE' )");
             stmt.close();
             con.close();
         } catch (Exception e) {

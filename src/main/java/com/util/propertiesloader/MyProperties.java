@@ -8,6 +8,8 @@ import java.util.Properties;
 
 public class MyProperties {
 
+    private static final String fileName = "database.properties";
+
     static Properties prop = new Properties();
 
     static {
@@ -21,5 +23,4 @@ public class MyProperties {
     public static String get(String key) {
         return prop.getProperty(key);
     }
-
 }

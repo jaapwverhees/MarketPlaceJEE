@@ -13,8 +13,10 @@ class RegisteredVisitorDAOTest {
 
     @BeforeEach
     void setUp() {
+        //TODO load different properties for testcases from resource folder.
+
         database.setUp();
-        DAO.setDatabasePassword("jdbc:h2:~/test");
+        DAO.setDatabaseURL("jdbc:h2:~/test");
         DAO.setDatabasePassword("");
         DAO.setDatabaseUser("sa");
     }
