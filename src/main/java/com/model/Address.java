@@ -2,7 +2,20 @@ package com.model;
 
 import com.util.exeptions.CustomException;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "address")
 public class Address {
+
+    public Address(){
+
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "adress_id")
+    private int adress_id;
     private String streetName;
     private int streetNumber;
     private String suffix;
@@ -55,5 +68,9 @@ public class Address {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public int getAdress_id() {
+        return adress_id;
     }
 }

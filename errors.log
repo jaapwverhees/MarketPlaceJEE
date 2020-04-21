@@ -196,7 +196,7 @@
   <method>create</method>
   <thread>1</thread>
   <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
-[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.VisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.VisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
 </record>
 </log>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -213,7 +213,7 @@
   <method>create</method>
   <thread>1</thread>
   <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
-[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.VisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.VisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
 </record>
 </log>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -230,7 +230,7 @@
   <method>create</method>
   <thread>1</thread>
   <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
-[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.VisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.VisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
 </record>
 </log>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -247,7 +247,7 @@
   <method>create</method>
   <thread>1</thread>
   <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
-[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.VisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.VisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
 </record>
 </log>
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -264,6 +264,6 @@
   <method>create</method>
   <thread>1</thread>
   <message>Duplicate entry 'userjaap@gmail.com' for key 'registred_visitor.PRIMARY'
-[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.RegisteredVisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.RegisterVisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
+[com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117), com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97), com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122), com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953), com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370), com.controller.DAO.VisitorDAO.addRegistredVisitor(RegisteredVisitorDAO.java:84), com.controller.VisitorController.registerVisitor(RegisterVisitorController.java:25), com.App.main(App.java:14)]</message>
 </record>
 </log>

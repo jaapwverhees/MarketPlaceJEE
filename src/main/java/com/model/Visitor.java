@@ -3,17 +3,31 @@ package com.model;
 import com.util.exeptions.CustomException;
 import com.util.password.PassWordGenerator;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-public class RegistredVisitor {
-    private String userName;
+@Entity(name = "visitor")
+public class Visitor {
+    @Id()
+    @Column(name="email")
     private String email;
+
+    private String userName;
+    @ElementCollection(targetClass = DeliveryOption.class)
+    @JoinTable(name = "delivery_options", joinColumns = @JoinColumn(name = "email"))
+    @Column(name = "delivery_option", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Set<DeliveryOption> deliveryOptions;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "adress_id")
     private Address address;
     private String password;
 
-    public RegistredVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) throws CustomException {
+    public Visitor() {
+    }
+
+    public Visitor(String userName, String email, Set<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) throws CustomException {
 
         if (deliveryOptions.isEmpty()) throw new CustomException("Must contain DeliveryOption");
         if (!emailIsValid(email)) throw new CustomException("String email is invalid");
@@ -24,7 +38,7 @@ public class RegistredVisitor {
         this.password = PassWordGenerator.generatePassword(12);
     }
 
-    public RegistredVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) throws CustomException {
+    public Visitor(String userName, String email, Set<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String zipcode) throws CustomException {
 
         if (deliveryOptions.isEmpty()) throw new CustomException("Must contain DeliveryOption");
         if (!emailIsValid(email)) throw new CustomException("String email is invalid");
@@ -35,7 +49,7 @@ public class RegistredVisitor {
         this.password = PassWordGenerator.generatePassword(12);
     }
 
-    public RegistredVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions) throws CustomException {
+    public Visitor(String userName, String email, Set<DeliveryOption> deliveryOptions) throws CustomException {
 
         if (deliveryOptions.isEmpty()) throw new CustomException("Must contain DeliveryOption");
         if (deliveryOptions.contains(DeliveryOption.PICKUPFROMHOME))
