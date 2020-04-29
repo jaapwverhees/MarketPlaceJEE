@@ -4,24 +4,36 @@ import com.util.exeptions.CustomException;
 import com.util.password.PassWordGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
+import static javax.persistence.EnumType.STRING;
+
 @Entity(name = "visitor")
 public class Visitor {
+
     @Id()
-    @Column(name="email")
+    @NotNull
+    @Size(min = 3, max = 30)
+    @Email
     private String email;
 
+    @Size(min = 3, max = 30)
+    @NotNull
     private String userName;
+
     @ElementCollection(targetClass = DeliveryOption.class)
     @JoinTable(name = "delivery_options", joinColumns = @JoinColumn(name = "email"))
-    @Column(name = "delivery_option", nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
+    @NotNull
     private Set<DeliveryOption> deliveryOptions;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "adress_id")
+
+    @Embedded
     private Address address;
+
     private String password;
 
     public Visitor() {

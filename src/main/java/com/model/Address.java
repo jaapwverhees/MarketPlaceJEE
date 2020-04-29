@@ -2,24 +2,22 @@ package com.model;
 
 import com.util.exeptions.CustomException;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "address")
+@Embeddable
 public class Address {
 
-    public Address(){
-
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "adress_id")
-    private int adress_id;
     private String streetName;
-    private int streetNumber;
+
+    private Integer streetNumber;
+
     private String suffix;
+
     private String zipcode;
+
+    public Address() {
+    }
 
     public Address(String streetName, int streetNumber, String suffix, String zipcode) throws CustomException {
         if (streetNumber < 1) throw new CustomException("Streetnumber cannot be lower then 1");
@@ -29,7 +27,7 @@ public class Address {
         this.zipcode = zipcode;
     }
 
-    public Address(String streetName, int streetNumber, String zipcode)throws CustomException {
+    public Address(String streetName, int streetNumber, String zipcode) throws CustomException {
         if (streetNumber < 1) throw new CustomException("Streetnumber cannot be lower then 1");
         this.streetName = streetName;
         this.streetNumber = streetNumber;
@@ -70,7 +68,4 @@ public class Address {
         this.zipcode = zipcode;
     }
 
-    public int getAdress_id() {
-        return adress_id;
-    }
 }
