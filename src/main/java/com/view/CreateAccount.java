@@ -21,13 +21,15 @@ public class CreateAccount {
 
     public void createAccount() {
 
+        voorwaarden();
+
         createUser();
         //TODO technically "Front end" shouldnt know about Deliveryoptions Enum.
         addDeliveryOptions();
 
         if (this.deliveryOptions.contains(DeliveryOption.PICKUPFROMHOME)) {
             createAdress();
-        } else{
+        } else {
             System.out.println("Wilt u uw adres toevoegen? (y/n)");
             if (choose()) {
                 createAdress();
@@ -40,6 +42,19 @@ public class CreateAccount {
             System.out.println(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, zipcode));
         } else {
             System.out.println(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode));
+        }
+
+    }
+
+    private void voorwaarden() {
+        System.out.println("Indien u gebruik wil maken van de DB Marketplace moet u akkoort gaan met de volgende voorwaarden;\n\n" +
+                FileReader.read("files/provisions") +
+                "\ngaat u akkoort? (y/n)"
+        );
+        if (!choose()) {
+            //TODO when created you would return to a main menu.
+            System.out.println("aan het afsluiten....");
+            System.exit(0);
         }
 
     }
