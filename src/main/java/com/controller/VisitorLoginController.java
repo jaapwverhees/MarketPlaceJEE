@@ -1,22 +1,23 @@
 package com.controller;
 
+import com.controller.DAO.VisitorDAO;
 import com.controller.DAO.VisitorDAOable;
 import com.model.Visitor;
 import com.util.password.PasswordAuthentication;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
+import javax.persistence.Persistence;
 
 
 public class VisitorLoginController {
 
-    @Inject
-    private Logger errorLog;
+    private Logger errorLog = LoggerFactory.getLogger(this.getClass());
 
-    @Inject
-    private VisitorDAOable visitorDAO;
+    private VisitorDAOable visitorDAO = new VisitorDAO();
 
-    @Inject
-    private PasswordAuthentication aut;
+    private PasswordAuthentication aut = new PasswordAuthentication();
 
     public Visitor login(String email, String password) {
         try {
@@ -29,10 +30,5 @@ public class VisitorLoginController {
             errorLog.error("Error", e);
         }
         return null;
-    }
-
-    //TODO setters are for testing, find way to test without setters
-    public void setVisitorDAO(VisitorDAOable visitorDAO) {
-        this.visitorDAO = visitorDAO;
     }
 }

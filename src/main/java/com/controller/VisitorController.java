@@ -30,8 +30,9 @@ public class VisitorController {
 
         try {
             Visitor visitor = new Visitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
+            String password = visitor.getPassword();
             visitorDAO.createVisitor(visitor);
-            sendConfirmationEmail(visitor);
+            sendConfirmationEmail(visitor, password);
         } catch (Exception e) {
             return exceptionHandler(e);
         }
@@ -42,8 +43,9 @@ public class VisitorController {
 
         try {
             Visitor visitor = new Visitor(userName, email, deliveryOptions, streetName, streetNumber, zipcode);
+            String password = visitor.getPassword();
             visitorDAO.createVisitor(visitor);
-            sendConfirmationEmail(visitor);
+            sendConfirmationEmail(visitor, password);
         } catch (Exception e) {
             return exceptionHandler(e);
         }
@@ -54,8 +56,9 @@ public class VisitorController {
 
         try {
             Visitor visitor = new Visitor(userName, email, deliveryOptions);
+            String password = visitor.getPassword();
             visitorDAO.createVisitor(visitor);
-            sendConfirmationEmail(visitor);
+            sendConfirmationEmail(visitor, password);
         } catch (Exception e) {
             return exceptionHandler(e);
         }
@@ -66,7 +69,7 @@ public class VisitorController {
         this.mailService = mailService;
     }
 
-    private void sendConfirmationEmail(Visitor visitor) throws MessagingException {
+    private void sendConfirmationEmail(Visitor visitor, String password) throws MessagingException {
 
         mailService.sendMail(
                 visitor.getEmail(),
@@ -78,7 +81,7 @@ public class VisitorController {
                                 "Met vriendelijke groet," +
                                 "klantenteam BDmarketPlace",
                         visitor.getUserName(),
-                        visitor.getPassword()));
+                        password));
     }
 
     private String exceptionHandler(Exception e) {

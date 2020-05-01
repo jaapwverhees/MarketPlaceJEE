@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 
 //TODO i dont quite get this class yet.
-public final class PasswordAuthentication {
+public class PasswordAuthentication {
 
     public static final String ID = "$31$";
 
