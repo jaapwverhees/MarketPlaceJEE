@@ -1,7 +1,5 @@
 package com;
 
-import com.controller.VisitorLoginController;
-import com.model.Visitor;
 import com.view.MainMenu;
 
 public class App {
@@ -10,6 +8,5 @@ public class App {
 
         MainMenu mainMenu = new MainMenu();
         mainMenu.start();
-
     }
 }
