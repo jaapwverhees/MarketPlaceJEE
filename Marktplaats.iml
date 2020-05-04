@@ -9,7 +9,7 @@
           <factory-entry name="MySQL" value="fdca9779-f333-4a1e-bf8a-02617dbd9328" />
         </datasource-mapping>
         <naming-strategy-map />
-        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/Itest/resources/META-INF/persistence.xml" />
       </configuration>
     </facet>
   </component>

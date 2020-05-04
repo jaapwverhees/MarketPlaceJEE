@@ -1,4 +1,4 @@
-[ERROR] 2020-04-29 18:48:45.857 [main] VisitorController - Error
+[ERROR] 2020-04-29 18:54:40.584 [main] VisitorController - Error
 javax.persistence.PersistenceException: org.hibernate.PropertyValueException: not-null property references a null or transient value : com.model.Visitor.address
 	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:154) ~[hibernate-core-5.4.14.Final.jar:5.4.14.Final]
 	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:181) ~[hibernate-core-5.4.14.Final.jar:5.4.14.Final]

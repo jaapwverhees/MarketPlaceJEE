@@ -7,6 +7,9 @@
         <class>com.model.Visitor</class>
         <class>com.model.Address</class>
         <class>com.model.DeliveryOption</class>
+        <class>com.model.product.Product</class>
+        <class>com.model.product.Category</class>
+        <class>com.model.product.Service</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.url"    value="jdbc:h2:mem:test" />

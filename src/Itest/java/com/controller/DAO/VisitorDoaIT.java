@@ -12,17 +12,13 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
+import javax.persistence.Persistence;
 import java.util.HashSet;
 import java.util.Set;
 
-@EnableAutoWeld
-@AddPackages(App.class)
-@AddBeanClasses(EntityManagerProducerAlt.class)
-@EnableAlternatives(EntityManagerProducerAlt.class)
 public class VisitorDoaIT {
 
-    @Inject
-    private VisitorDAO dao;
+    private VisitorDAO dao = new VisitorDAO(Persistence.createEntityManagerFactory("H2").createEntityManager());
 
     @Test
     void addValidVisitor() throws Exception {

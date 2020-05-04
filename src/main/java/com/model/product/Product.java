@@ -4,23 +4,19 @@ import com.model.AbstractEntity;
 import com.model.DeliveryOption;
 import com.model.Visitor;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.EnumType.STRING;
 
-@MappedSuperclass
-public abstract class Product extends AbstractEntity {
+@Entity
+public class Product extends AbstractEntity {
 
     private String name;
 
     private String description;
-
-//    @ElementCollection(targetClass = Object.class)
-//    private ArrayList<Object> multimedia;
 
     @ManyToOne
     private Visitor supplier;
@@ -28,6 +24,24 @@ public abstract class Product extends AbstractEntity {
     @ElementCollection(targetClass = DeliveryOption.class)
     @Enumerated(STRING)
     private Set<DeliveryOption> deliveryOptions;
+
+    private BigDecimal price;
+
+    //TODO relatie omdraaien?
+    @OneToMany(cascade = {CascadeType.ALL})
+    private Set<Category> categories = new HashSet<>();
+
+    public Product() {
+    }
+
+    public Product(String name, String description, Visitor supplier, Set<DeliveryOption> deliveryOptions, Set<Category> categories, BigDecimal price) {
+        this.name = name;
+        this.description = description;
+        this.supplier = supplier;
+        this.deliveryOptions = deliveryOptions;
+        this.categories = categories;
+        this.price = price;
+    }
 
     public String getName() {
         return name;
@@ -44,7 +58,6 @@ public abstract class Product extends AbstractEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
     public Visitor getSupplier() {
         return supplier;

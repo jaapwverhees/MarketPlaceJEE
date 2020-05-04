@@ -1,4 +1,25 @@
 package com.model.product;
 
-public enum Category {
+import com.model.AbstractEntity;
+
+import javax.persistence.Entity;
+
+@Entity
+public class Category extends AbstractEntity {
+
+
+    private String description;
+
+    public Category() {
+
+    }
+
+
+    public Category(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

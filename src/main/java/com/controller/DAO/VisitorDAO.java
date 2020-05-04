@@ -9,12 +9,16 @@ import javax.persistence.Persistence;
 
 public class VisitorDAO implements VisitorDAOable {
 
-    //@Inject
+
     private PasswordAuthentication aut = new PasswordAuthentication();
 
-    //@Inject
     private EntityManager entityManager = Persistence.createEntityManagerFactory("MySQL").createEntityManager();
 
+    public VisitorDAO(){}
+
+    public VisitorDAO(EntityManager entityManager){
+        this.entityManager = entityManager;
+    }
 
     @Override
     public Visitor getVisitor(String email) throws Exception {
