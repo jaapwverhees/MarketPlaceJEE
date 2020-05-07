@@ -2,13 +2,11 @@ package com.view;
 
 import com.model.Visitor;
 
-import java.util.Scanner;
+import static com.view.util.UserInputReader.inputString;
 
 public class LoggedInMenu {
 
-    private Scanner scanner = new Scanner(System.in);
-
-    private Visitor visitor;
+    private final Visitor visitor;
 
     public LoggedInMenu(Visitor visitor) {
         this.visitor = visitor;
@@ -19,17 +17,15 @@ public class LoggedInMenu {
                 "1: voer artikel in\n" +
                 "2: zoek product\n" +
                 "3: log uit\n" +
-                "4: sluit af\n\n" +
-                "voer uw keuze in;");
-        options(String.valueOf(scanner.nextLine()));
+                "4: sluit af\n\n");
+
+        options(inputString("voer uw keuze in;"));
     }
 
-    private void options(String input){
-        LoginMenu loginMenu = new LoginMenu();
-        CreateAccount createAccount = new CreateAccount();
-        switch (input){
+    private void options(String input) {
+        switch (input) {
             case "1":
-                new CreateArticle().start();
+                new CreateArticle(visitor).start();
                 break;
             case "2":
                 new SearchProducts().start();

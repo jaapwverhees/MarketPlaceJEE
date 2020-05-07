@@ -13,7 +13,7 @@ public class Category extends AbstractEntity {
 
     private String description;
 
-    @ManyToMany(cascade = ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "categories")
     Set<Product> products = new HashSet<>();
 
     public Category() {

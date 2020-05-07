@@ -1,19 +1,19 @@
 package com.view;
 
+import com.view.util.UserInputReader;
+
 import java.util.Scanner;
+
+import static com.view.util.UserInputReader.inputString;
 
 public class MainMenu {
 
-    private Scanner scanner = new Scanner(System.in);
-
-
     public void start(){
-        System.out.println("Welkom to BDMarketplace, uw opties:\n\n"+
+        options(inputString("Welkom to BDMarketplace, uw opties:\n\n"+
                 "1: login\n"+
                 "2: create Account\n"+
                 "3: exit\n\n"+
-                "voer uw keuze in;");
-        options(String.valueOf(scanner.nextLine()));
+                "voer uw keuze in;"));
     }
 
     private void options(String input){

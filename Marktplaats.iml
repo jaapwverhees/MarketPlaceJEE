@@ -5,7 +5,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="H2" />
+          <factory-entry name="H2" value="fdca9779-f333-4a1e-bf8a-02617dbd9328" />
           <factory-entry name="Marktplaats" />
           <factory-entry name="MySQL" value="fdca9779-f333-4a1e-bf8a-02617dbd9328" />
         </datasource-mapping>

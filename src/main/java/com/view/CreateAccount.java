@@ -2,20 +2,24 @@ package com.view;
 
 import com.controller.VisitorController;
 import com.model.DeliveryOption;
+import com.view.util.FileReader;
+import com.view.util.Validator;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+import static com.view.util.ControllerService.getVisitorController;
+import static com.view.util.UserInputReader.inputString;
+import static com.view.util.Validator.chooseYOrN;
+import static com.view.util.Validator.validEmailAddress;
+
 public class CreateAccount {
 
     private static final Scanner scanner = new Scanner(System.in);
-    VisitorController controller = new VisitorController();
-    private String userName;
+    private final Set<DeliveryOption> deliveryOptions = new HashSet<>();
+    VisitorController controller = getVisitorController();
     private String email;
-    private Set<DeliveryOption> deliveryOptions = new HashSet<>();
     private String streetName;
     private int streetNumber;
     private String suffix;
@@ -25,15 +29,16 @@ public class CreateAccount {
 
         voorwaarden();
 
-        createUser();
-        //TODO technically "Front end" shouldnt know about Deliveryoptions Enum.
+        String userName = inputString("Voer uw gebruikernaam in:");
+
+        String email = createEmail();
+
         addDeliveryOptions();
 
         if (this.deliveryOptions.contains(DeliveryOption.PICKUPFROMHOME)) {
             createAdress();
         } else {
-            System.out.println("Wilt u uw adres toevoegen? (y/n)");
-            if (choose()) {
+            if (chooseYOrN("Wilt u uw adres toevoegen? (y/n)")) {
                 createAdress();
             }
         }
@@ -51,31 +56,23 @@ public class CreateAccount {
 
     private void voorwaarden() {
         System.out.println("Indien u gebruik wil maken van de DB Marketplace moet u akkoort gaan met de volgende voorwaarden;\n\n" +
-                FileReader.read("files/provisions") +
-                "\ngaat u akkoort? (y/n)"
-        );
-        if (!choose()) {
-            System.out.println("aan het afsluiten....");
+                FileReader.read("files/provisions"));
+        if (!chooseYOrN("Gaat u akkoort? (y/n)")) {
+            System.out.println("Terug naar het hooftmenu....");
             new MainMenu().start();
         }
 
     }
 
-    private void createUser() {
-        System.out.println("Voer uw username in");
-        this.userName = String.valueOf(scanner.nextLine());
+    private String createEmail() {
+        String email = inputString("Voer uw emailadres in");
 
-        System.out.println("Voer uw emailadres in");
-        this.email = String.valueOf(scanner.nextLine());
-        try{
-            InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        }catch(AddressException e){
-            this.email = null;
-            System.out.println("niet geldig emailadres, probeer opnieuw");
-            createUser();
+        if(!validEmailAddress(this.email)){
+            return createEmail();
         }
+        return email;
     }
+
 
     private void createAdress() {
         try {
@@ -125,26 +122,10 @@ public class CreateAccount {
                 addDeliveryOptions();
         }
         if (!deliveryOptions.isEmpty()) {
-            System.out.println("your delivery options are:\n" + deliveryOptions.toString() +
-                    "\nWilt u nog een optie toevoegen?(y/n)");
-            if (choose()) {
+            System.out.println("your delivery options are:\n" + deliveryOptions.toString());
+            if (chooseYOrN("Wilt u nog een optie toevoegen?(y/n)")) {
                 addDeliveryOptions();
             }
         }
-    }
-
-    boolean choose() {
-        String choice = String.valueOf(scanner.nextLine()).toLowerCase();
-
-        switch (choice) {
-            case "y":
-                return true;
-            case "n":
-                return false;
-            default:
-                System.out.println("ongeldige invoer");
-                choose();
-        }
-        return false;
     }
 }

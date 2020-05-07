@@ -1,4 +1,4 @@
-[ERROR] 2020-05-06 12:10:39.534 [main] VisitorLoginController - Error
+[ERROR] 2020-05-06 12:18:08.274 [main] VisitorLoginController - Error
 java.lang.NullPointerException: null
 	at com.controller.VisitorLoginController.login(VisitorLoginController.java:25) [classes/:?]
 	at com.view.LoginMenu.login(LoginMenu.java:23) [classes/:?]

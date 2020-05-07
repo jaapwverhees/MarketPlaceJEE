@@ -3,28 +3,29 @@ package com.view;
 import com.controller.ProductController;
 import com.model.product.Category;
 import com.model.product.Product;
-import com.util.exeptions.CustomException;
 
 import java.math.BigDecimal;
-import java.util.InputMismatchException;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+
+import static com.view.util.ControllerService.getProductController;
+import static com.view.util.UserInputReader.*;
+import static com.view.util.Validator.validChoiceFromList;
 
 public class SearchProducts {
 
-    private final Scanner scanner = new Scanner(System.in);
-
-    private final ProductController controller = new ProductController();
+    private final ProductController controller = getProductController();
 
     public void start() {
-        System.out.println("waarop wilt u zoeken?\n" +
+        searchOptions(inputString(displayOptions()));
+    }
+
+    public String displayOptions() {
+        return "waarop wilt u zoeken?\n" +
                 "1:     categorie\n" +
                 "2:     prijs\n" +
                 "3:     naam\n" +
                 "4:     laat alle artikelen zien\n" +
-                "5:     exit");
-        searchOptions(String.valueOf(scanner.nextLine()));
+                "5:     exit";
     }
 
     private void searchOptions(String input) {
@@ -50,77 +51,58 @@ public class SearchProducts {
     }
 
     private void showAllProducts() {
-        List<Product> products = controller.getAllProducts();
-        displayProducts(products);
+        displayProducts(controller.getAllProducts());
     }
 
     private void byName() {
-        System.out.println("voer de naam van het product in");
-        String productname = scanner.nextLine();
-        List<Product> products = controller.getProductsByName(productname);
-        displayProducts(products);
+        String productName = inputString("voer de naam van het product in");
+        displayProducts(controller.getProductsByName(productName));
     }
 
     private void price() {
-        BigDecimal minimum = BigDecimal.ONE;
-        BigDecimal maximum = BigDecimal.ONE;
-        try {
-            minimum = bigDecimal("voer het minimum bedrag in");
-            maximum = bigDecimal("Voer het maximum bedrag in");
-            List<Product> products = controller.getProductsByPrice(minimum, maximum);
+
+        BigDecimal minimum = inputBigDecimal("voer het minimum bedrag in");
+        BigDecimal maximum = inputBigDecimal("Voer het maximum bedrag in");
+        List<Product> products = controller.getProductsByPrice(minimum, maximum);
+        if (products.isEmpty()) {
+            System.out.println("Geen producten gevonden binnen deze waarden");
+        } else {
             displayProducts(products);
-        } catch (NumberFormatException e) {
-            System.out.println("geen geldig nummer, decimalen moeten gescheiden worden door een punt.");
-            price();
         }
     }
 
     private void category() {
-        System.out.println("De categorien zijn:");
         List<Category> categoryList = controller.getAllCategories();
+        displayCategories(categoryList);
+        int choice = inputInt("selecteer uw keuze op basis van het categorie nummer");
+        if (validChoiceFromList(categoryList, choice)) {
+            List<Product> productList = controller.getProductsByCategory(categoryList.get(choice - 1).getDescription());
+            displayProducts(productList);
+        } else {
+            System.out.println("ongeldige keuze, probeer het opnieuw");
+            category();
+        }
+    }
+
+    private void displayCategories(List<Category> categoryList) {
+        System.out.println("De categorien zijn:");
         for (int i = 0; i < categoryList.size(); i++) {
             System.out.printf("productnummer:   %s\ndescription:    %s\n\n", i + 1, categoryList.get(i).getDescription());
         }
-        System.out.println("selecteer uw keuze op basis van het categorie nummer");
-        int choice = validChoiceFromList(categoryList);
-        List<Product> productList = controller.getProductsByCategory(categoryList.get(choice - 1).getDescription());
-        displayProducts(productList);
     }
 
     private void displayProducts(List<Product> productList) {
         if (productList.isEmpty()) {
             System.out.println("geen overeenkomende resultaten");
-        }
-        for (Product product : productList) {
-            System.out.printf("     ---product---\n" +
-                            "name: %s\n" +
-                            "price: %s\n" +
-                            "deliveryOptions: %s\n" +
-                            "----------\n",
-                    product.getName(), product.getPrice().toString(), product.getDeliveryOptions().toString());
-        }
-    }
-
-    private int validChoiceFromList(List list) {
-        int choice = 0;
-        try {
-            choice = Integer.parseInt(scanner.nextLine());
-            if (choice < 1 || choice > list.size() + 1) {
-                throw new CustomException("geen geldig nummer");
+        } else {
+            for (Product product : productList) {
+                System.out.printf("     ---product---\n" +
+                                "name: %s\n" +
+                                "price: %s\n" +
+                                "deliveryOptions: %s\n" +
+                                "----------\n",
+                        product.getName(), product.getPrice().toString(), product.getDeliveryOptions().toString());
             }
-        } catch (NumberFormatException e) {
-            System.out.println("geen nummer, probeer opnieuw");
-            validChoiceFromList(list);
-        } catch (CustomException e) {
-            System.out.println(e.getMessage());
-            validChoiceFromList(list);
         }
-        return choice;
-    }
-
-    private BigDecimal bigDecimal(String string) {
-        System.out.println(string);
-        BigDecimal bigDecimal = new BigDecimal(Double.valueOf(scanner.nextLine()));
-        return bigDecimal;
     }
 }

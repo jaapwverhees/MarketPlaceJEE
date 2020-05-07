@@ -2,19 +2,15 @@ package com.view;
 
 import com.controller.VisitorLoginController;
 import com.model.Visitor;
-import sun.rmi.runtime.Log;
 
-import java.util.Scanner;
+import static com.view.util.ControllerService.getVisitorLoginController;
+import static com.view.util.UserInputReader.inputString;
 
 public class LoginMenu {
 
+    private final VisitorLoginController controller = getVisitorLoginController();
     private String password;
-
     private String email;
-
-    private Scanner scanner = new Scanner(System.in);
-
-    private VisitorLoginController controller = new VisitorLoginController();
 
     public void login() {
         InputCredentials();
@@ -24,7 +20,7 @@ public class LoginMenu {
             System.out.println("Invalid credentials, returning to main menu...");
             MainMenu mainMenu = new MainMenu();
             mainMenu.start();
-        } else{
+        } else {
             new LoggedInMenu(visitor).start();
         }
 
@@ -32,13 +28,8 @@ public class LoginMenu {
 
     private void InputCredentials() {
 
-        System.out.println("voor uw email adres in;");
+        this.email = inputString("voor uw email adres in;");
 
-        this.email = String.valueOf(scanner.nextLine());
-
-        System.out.println("voor uw wachtwoord in;");
-
-        this.password = String.valueOf(scanner.nextLine());
-
+        this.password = inputString("voor uw wachtwoord in;");
     }
 }

@@ -9,6 +9,8 @@ import com.model.product.Category;
 import com.model.product.PriceType;
 import com.model.product.Product;
 import com.model.product.Service;
+import com.util.exeptions.CustomException;
+import com.view.CreateArticle;
 import com.view.SearchProducts;
 
 import java.math.BigDecimal;
@@ -23,10 +25,11 @@ public class Init {
     private Set<DeliveryOption> deliveryOptions = new HashSet<>();
     private Set<Category> categories= new HashSet<>();
 
-    public void start(){
+    public void start() throws CustomException {
         deliveryOptions.add(DeliveryOption.WAREHOUSE);
+        Visitor visitor = new Visitor("jaapie", "test@test.nl",deliveryOptions);
         try {
-            visitorDAO.createVisitor(new Visitor("jaapie", "test@test.nl",deliveryOptions));
+            visitorDAO.createVisitor(visitor);
             Category electronics = new Category("Electronics");
             Category toys = new Category("Toys");
             productDAO.addCategory(toys);
@@ -43,6 +46,7 @@ public class Init {
             exception.printStackTrace();
         }
         //TODO een entitymanager fac voor hele applicatie.
-       new SearchProducts().start();
+       //new SearchProducts().start();
+        new CreateArticle(visitor).start();
     }
 }

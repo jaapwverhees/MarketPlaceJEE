@@ -29,7 +29,7 @@ public class Product extends AbstractEntity {
 
     private BigDecimal price;
 
-    @ManyToMany(cascade = ALL)   // bidirectional
+    @ManyToMany(cascade = ALL)
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany

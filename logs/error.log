@@ -1,1 +1,1 @@
-[ERROR] 2020-05-07 11:13:24.763 [main] SqlExceptionHelper - Duplicate entry 'test@test.nl' for key 'visitor.PRIMARY'
+[ERROR] 2020-05-07 12:39:11.033 [main] SqlExceptionHelper - Field 'id' doesn't have a default value
