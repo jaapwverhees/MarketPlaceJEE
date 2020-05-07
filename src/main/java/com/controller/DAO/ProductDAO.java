@@ -1,24 +1,24 @@
 package com.controller.DAO;
 
+import com.model.product.Category;
 import com.model.product.Product;
+import com.util.exeptions.CustomException;
 import com.util.password.PasswordAuthentication;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import com.util.producers.EntityManagerProducer;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class ProductDAO {
 
     private PasswordAuthentication aut = new PasswordAuthentication();
 
-    private EntityManager entityManager = Persistence.createEntityManagerFactory("MySQL").createEntityManager();
+    private EntityManager entityManager = EntityManagerProducer.getEntityManager();
 
     public ProductDAO() {
     }
@@ -39,9 +39,33 @@ public class ProductDAO {
         return query.getResultList();
     }
 
-    public List<Product> getProductByCategory(int id) {
-        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p JOIN p.categories c WHERE c.id = : id", Product.class);
-        query.setParameter("id", id);
+    public List<Product> getProductByCategory(String description) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p JOIN p.categories c WHERE c.description = :description", Product.class);
+        query.setParameter("description", description);
         return query.getResultList();
+    }
+
+    public List<Product> getProductByPriceRange(BigDecimal minimum, BigDecimal maximum) {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p WHERE p.price BETWEEN :minimum AND :maximum ORDER BY p.price", Product.class);
+        query.setParameter("minimum", minimum);
+        query.setParameter("maximum", maximum);
+        return query.getResultList();
+    }
+
+    public List<Product> getAllProducts() {
+        TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p", Product.class);
+        return query.getResultList();
+    }
+
+    public List<Category> getAllCategory() {
+        TypedQuery<Category> query = entityManager.createQuery("SELECT c FROM Category c", Category.class);
+        return query.getResultList();
+    }
+
+    //TODO admin validation
+    public void addCategory(Category category) throws Exception {
+        entityManager.getTransaction().begin();
+        entityManager.persist(category);
+        entityManager.getTransaction().commit();
     }
 }

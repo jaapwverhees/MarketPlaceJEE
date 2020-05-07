@@ -10,6 +10,7 @@
         <class>com.model.product.Product</class>
         <class>com.model.product.Category</class>
         <class>com.model.product.Service</class>
+        <class>com.model.product.Multimedia</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.url"    value="jdbc:h2:mem:test" />

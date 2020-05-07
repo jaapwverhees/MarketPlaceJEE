@@ -17,14 +17,12 @@ public class MainMenu {
     }
 
     private void options(String input){
-        LoginMenu loginMenu = new LoginMenu();
-        CreateAccount createAccount = new CreateAccount();
         switch (input){
             case "1":
-                loginMenu.login();
+                new LoginMenu().login();
                 break;
             case "2":
-                createAccount.createAccount();
+                new CreateAccount().createAccount();
                 break;
             case "3":
                 System.exit(0);

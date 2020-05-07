@@ -4,5 +4,5 @@ public enum DeliveryOption {
     PICKUPFROMHOME,
     WAREHOUSE,
     DELIVERY,
-    PAYONDELIVERY
+    PAYONDELIVERY;
 }

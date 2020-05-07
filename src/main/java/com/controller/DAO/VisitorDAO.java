@@ -2,21 +2,21 @@ package com.controller.DAO;
 
 import com.model.Visitor;
 import com.util.password.PasswordAuthentication;
+import com.util.producers.EntityManagerProducer;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 
 public class VisitorDAO implements VisitorDAOable {
 
 
     private PasswordAuthentication aut = new PasswordAuthentication();
 
-    private EntityManager entityManager = Persistence.createEntityManagerFactory("MySQL").createEntityManager();
+    private EntityManager entityManager = EntityManagerProducer.getEntityManager();
 
-    public VisitorDAO(){}
+    public VisitorDAO() {
+    }
 
-    public VisitorDAO(EntityManager entityManager){
+    public VisitorDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

@@ -2,9 +2,8 @@ package com.view;
 
 import com.controller.VisitorLoginController;
 import com.model.Visitor;
-import javafx.scene.control.MenuItem;
+import sun.rmi.runtime.Log;
 
-import java.lang.reflect.Array;
 import java.util.Scanner;
 
 public class LoginMenu {
@@ -17,20 +16,21 @@ public class LoginMenu {
 
     private VisitorLoginController controller = new VisitorLoginController();
 
-    public Visitor login(){
+    public void login() {
         InputCredentials();
-        try{
-            Visitor visitor = controller.login(email,password);
-            System.out.println("Valid credentials");
-            return visitor;
-        } catch(NullPointerException nullPointerException){
+
+        Visitor visitor = controller.login(email, password);
+        if (visitor == null) {
             System.out.println("Invalid credentials, returning to main menu...");
             MainMenu mainMenu = new MainMenu();
             mainMenu.start();
+        } else{
+            new LoggedInMenu(visitor).start();
         }
-        return null;
+
     }
-    private void InputCredentials(){
+
+    private void InputCredentials() {
 
         System.out.println("voor uw email adres in;");
 

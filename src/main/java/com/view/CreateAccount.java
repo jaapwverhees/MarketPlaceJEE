@@ -3,6 +3,8 @@ package com.view;
 import com.controller.VisitorController;
 import com.model.DeliveryOption;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -44,6 +46,7 @@ public class CreateAccount {
             System.out.println(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode));
         }
 
+        new MainMenu().start();
     }
 
     private void voorwaarden() {
@@ -52,9 +55,8 @@ public class CreateAccount {
                 "\ngaat u akkoort? (y/n)"
         );
         if (!choose()) {
-            //TODO when created you would return to a main menu.
             System.out.println("aan het afsluiten....");
-            System.exit(0);
+            new MainMenu().start();
         }
 
     }
@@ -65,26 +67,38 @@ public class CreateAccount {
 
         System.out.println("Voer uw emailadres in");
         this.email = String.valueOf(scanner.nextLine());
+        try{
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        }catch(AddressException e){
+            this.email = null;
+            System.out.println("niet geldig emailadres, probeer opnieuw");
+            createUser();
+        }
     }
 
     private void createAdress() {
-        System.out.println("Voer uw straatnaam in");
-        this.streetName = String.valueOf(scanner.nextLine());
+        try {
+            System.out.println("Voer uw straatnaam in");
+            this.streetName = String.valueOf(scanner.nextLine());
 
-        System.out.println("Voer uw huisnummer in");
-        this.streetNumber = Integer.parseInt(scanner.nextLine());
+            System.out.println("Voer uw huisnummer in");
+            this.streetNumber = Integer.parseInt(scanner.nextLine());
 
-        System.out.println("Voer uw huisnummer-suffix in. heeft u die niet, druk dan op enter");
-        this.suffix = String.valueOf(scanner.nextLine());
-        if (suffix.equals("")) {
-            this.suffix = null;
+            System.out.println("Voer uw huisnummer-suffix in. heeft u die niet, druk dan op enter");
+            this.suffix = String.valueOf(scanner.nextLine());
+            if (suffix.equals("")) {
+                this.suffix = null;
+            }
+            System.out.println("Voer uw postcode in");
+            this.zipcode = String.valueOf(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("ongeldig huisnummer, probeer opnieuw");
+            createAdress();
         }
-        System.out.println("Voer uw postcode in");
-        this.zipcode = String.valueOf(scanner.nextLine());
     }
 
     private void addDeliveryOptions() {
-        this.deliveryOptions = new HashSet<>();
         System.out.println("bezorgopties zijn:" +
                 "1.    PICKUPFROMHOME,\n" +
                 "2.    WAREHOUSE,\n" +
@@ -108,13 +122,14 @@ public class CreateAccount {
                 break;
             default:
                 System.out.println("invalid input, try again");
+                addDeliveryOptions();
         }
         if (!deliveryOptions.isEmpty()) {
             System.out.println("your delivery options are:\n" + deliveryOptions.toString() +
-                    "Wilt u nog een optie toevoegen?(y/n)");
-        }
-        if (choose()) {
-            addDeliveryOptions();
+                    "\nWilt u nog een optie toevoegen?(y/n)");
+            if (choose()) {
+                addDeliveryOptions();
+            }
         }
     }
 

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-class ProductDAOTest {
+class ProductDAOTestIT {
 
 
     private Visitor visitor;
@@ -41,11 +41,21 @@ class ProductDAOTest {
         Set<Category> categories = new HashSet<>();
         categories.add(new Category("category"));
         visitor = new Visitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
+        visitorDAO.createVisitor(visitor);
+
+
+
         BigDecimal bigDecimal = new BigDecimal("12.5");
         product = new Product("Article", "Description", visitor, deliveryOptions, categories, bigDecimal);
-
-        visitorDAO.createVisitor(visitor);
         dao.addArticle(product);
+
+        bigDecimal = new BigDecimal("13");
+        Product product2 = new Product("Article2", "Description2", visitor, deliveryOptions, categories, bigDecimal);
+        dao.addArticle(product2);
+
+        bigDecimal = new BigDecimal("15");
+        Product product3 = new Product("Article3", "Description3", visitor, deliveryOptions, categories, bigDecimal);
+        dao.addArticle(product3);
     }
 
     @Test
@@ -56,7 +66,33 @@ class ProductDAOTest {
 
     @Test
     void getProductByCategory() {
-        List<Product> list = dao.getProductByCategory(2);
-        System.out.println(list.get(0).getDescription());
+        List<Product> list = dao.getProductByCategory("category");
+        Assertions.assertEquals("Description", list.get(0).getDescription());
+    }
+    @Test
+    void getProductByPriceRangeReturnResultsValidMatches() {
+        List<Product> list = dao.getProductByPriceRange(BigDecimal.valueOf(10.0), BigDecimal.valueOf(14.0));
+        Assertions.assertEquals(2, list.size());
+    }
+
+    @Test
+    void getAllProductsreturnsThreeProducts(){
+        List<Product> list = dao.getAllProducts();
+        Assertions.assertEquals(3, list.size());
+    }
+
+    @Test
+    void getAllCategoryReturnOneResult() {
+        Assertions.assertEquals(1, dao.getAllCategory().size());
+    }
+
+    @Test
+    void addANewValidCategory() throws Exception {
+        dao.addCategory(new Category("new Category"));
+        List<Category> categories = dao.getAllCategory();
+        Assertions.assertEquals(2, categories.size());
+        Assertions.assertTrue(categories.get(0).getDescription().equals("category") || categories.get(1).getDescription().equals("new Category"));
+        Assertions.assertTrue(categories.get(1).getDescription().equals("category") || categories.get(1).getDescription().equals("new Category"));
+
     }
 }

@@ -26,7 +26,7 @@ public class Visitor {
     private String userName;
 
     @ElementCollection(targetClass = DeliveryOption.class)
-    @JoinTable(name = "delivery_options", joinColumns = @JoinColumn(name = "email"))
+//    @JoinTable(name = "delivery_options", joinColumns = @JoinColumn(name = "email"))
     @Enumerated(STRING)
     @NotNull
     private Set<DeliveryOption> deliveryOptions;

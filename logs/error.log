@@ -1,1 +1,1 @@
-[ERROR] 2020-05-04 11:52:12.847 [main] SqlExceptionHelper - Duplicate entry '2' for key 'category.PRIMARY'
+[ERROR] 2020-05-07 11:13:24.763 [main] SqlExceptionHelper - Duplicate entry 'test@test.nl' for key 'visitor.PRIMARY'

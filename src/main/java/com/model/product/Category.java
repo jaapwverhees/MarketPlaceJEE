@@ -2,16 +2,21 @@ package com.model.product;
 
 import com.model.AbstractEntity;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 public class Category extends AbstractEntity {
 
-
     private String description;
 
-    public Category() {
+    @ManyToMany(cascade = ALL, fetch = FetchType.LAZY)
+    Set<Product> products = new HashSet<>();
 
+    public Category() {
     }
 
 
@@ -21,5 +26,12 @@ public class Category extends AbstractEntity {
 
     public String getDescription() {
         return description;
+    }
+
+    public void addProduct(Product product){
+        products.add(product);
+    }
+    public void removeProduct(Product product){
+        products.remove(product);
     }
 }

@@ -7,6 +7,7 @@
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="${logpattern}"/>
+
         </Console>
 
         <!-- append is false for test purposes so the logfiles are automatically overwritten. Don't use this on production. -->
@@ -32,7 +33,6 @@
         <!--<Logger name="org.hibernate.type.descriptor.sql" level="trace"/>-->
 
         <Root level="ERROR">
-            <AppenderRef ref="console"/>
             <AppenderRef ref="rollingFile"/>
         </Root>
     </Loggers>

@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
@@ -27,9 +29,11 @@ public class Product extends AbstractEntity {
 
     private BigDecimal price;
 
-    //TODO relatie omdraaien?
-    @OneToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = ALL)   // bidirectional
     private Set<Category> categories = new HashSet<>();
+
+    @OneToMany
+    private Set<Multimedia> multimedia = new HashSet<>();
 
     public Product() {
     }
@@ -41,6 +45,14 @@ public class Product extends AbstractEntity {
         this.deliveryOptions = deliveryOptions;
         this.categories = categories;
         this.price = price;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public Set<DeliveryOption> getDeliveryOptions() {
+        return deliveryOptions;
     }
 
     public String getName() {
@@ -66,4 +78,5 @@ public class Product extends AbstractEntity {
     public void setSupplier(Visitor supplier) {
         this.supplier = supplier;
     }
+
 }
