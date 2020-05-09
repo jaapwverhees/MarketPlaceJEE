@@ -1,22 +1,23 @@
 package com.controller;
 
 import com.controller.DAO.VisitorDAO;
-import com.controller.DAO.VisitorDAOable;
 import com.model.Visitor;
 import com.util.password.PasswordAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import javax.persistence.Persistence;
-
 
 public class VisitorLoginController {
 
+    @SuppressWarnings("FieldMayBeFinal")
     private Logger errorLog = LoggerFactory.getLogger(this.getClass());
 
-    private VisitorDAOable visitorDAO = new VisitorDAO();
 
+    @SuppressWarnings("FieldMayBeFinal")
+    private VisitorDAO visitorDAO = new VisitorDAO();
+
+
+    @SuppressWarnings("FieldMayBeFinal")
     private PasswordAuthentication aut = new PasswordAuthentication();
 
     public Visitor login(String email, String password) {
@@ -27,7 +28,7 @@ public class VisitorLoginController {
                 return registeredVisitor;
             }
         } catch (Exception e) {
-            errorLog.error("Error", e);
+            errorLog.error("ERROR :", e);
         }
         return null;
     }

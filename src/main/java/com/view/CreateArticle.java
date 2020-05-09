@@ -4,33 +4,40 @@ import com.controller.ProductController;
 import com.model.DeliveryOption;
 import com.model.Visitor;
 import com.model.product.Category;
+import com.model.product.PriceType;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.model.product.PriceType.TotalPrice;
+import static com.model.product.PriceType.hourlyRate;
 import static com.view.util.ControllerService.getProductController;
 import static com.view.util.UserInputReader.*;
+import static com.view.util.Validator.chooseYOrN;
 
 public class CreateArticle {
 
     private final Visitor visitor;
     private final Set<DeliveryOption> deliveryOptions = new HashSet<>();
-    private final Set<Category> newProductCategories = new HashSet<>();
     private final ProductController controller = getProductController();
     private final List<Category> possibleCategoryList = controller.getAllCategories();
-
+    private Set<Category> productCategories = new HashSet<>();
+    private String name;
+    private String description;
+    private BigDecimal price;
 
     public CreateArticle(Visitor visitor) {
         this.visitor = visitor;
     }
 
+    //TODO StringBuilder for display methods
     public void start() {
 
-        String name = inputString("Voer de naam van het product in:");
+        this.name = inputString("Voer de naam van het product in:");
 
-        String description = inputString("voer de beschrijving in");
+        this.description = inputString("voer de beschrijving in");
 
         displayDeliveryOptions();
 
@@ -38,28 +45,49 @@ public class CreateArticle {
 
         displayPossibleCategoryOptions();
 
-        addCategoryOption();
+        productCategories = addCategoryOption(productCategories);
 
-        BigDecimal price = inputBigDecimal("Voer de prijs in");
+        this.price = inputBigDecimal("Voer de prijs in");
 
-        System.out.println(controller.addArticle(name, description, visitor, deliveryOptions, newProductCategories, price));
+        createServiceOrProduct();
 
         new LoggedInMenu(visitor).start();
     }
 
-    private void addCategoryOption() {
+    private void createServiceOrProduct() {
+        if (chooseYOrN("is het product een dienst?")) {
+            PriceType priceType = setPriceType();
+            System.out.println(controller.addService(name, description, visitor, deliveryOptions, productCategories, price, priceType));
+        } else {
+            System.out.println(controller.addArticle(name, description, visitor, deliveryOptions, productCategories, price));
+        }
+    }
+
+    private PriceType setPriceType() {
+        String choice = inputString("kies welke betaalmogelijkheid is wilt, hourlyrate of totalprice");
+        if (hourlyRate.name().equalsIgnoreCase(choice)) {
+            return hourlyRate;
+        } else if (TotalPrice.name().equalsIgnoreCase(choice)) {
+            return TotalPrice;
+        } else {
+            System.out.println("ongeldige invoer, probeer opnieuw");
+            return setPriceType();
+        }
+    }
+
+    private Set<Category> addCategoryOption(Set<Category> categories) {
 
         int choice = inputInt("Voer uw gewenste Categorie in") - 1;
         if (choice < 0 || choice > possibleCategoryList.size()) {
             System.out.println("ongeldige invoer, probeer het nogmaals");
-            addCategoryOption();
+            return addCategoryOption(categories);
         } else {
-            newProductCategories.add(possibleCategoryList.get(choice));
+            categories.add(possibleCategoryList.get(choice));
         }
-
-        if (choose("wilt u nog een mogelijkheid toevoegen?")) {
-            addCategoryOption();
+        if (chooseYOrN("wilt u nog een mogelijkheid toevoegen?")) {
+            return addCategoryOption(categories);
         }
+        return categories;
     }
 
     private void displayPossibleCategoryOptions() {
@@ -82,23 +110,8 @@ public class CreateArticle {
         if (checker) {
             System.out.println("ongeldige invoer, probeer het nogmaals");
             addDeliveryOptions();
-        } else if (choose("wilt u nog een mogelijkheid toevoegen?")) {
+        } else if (chooseYOrN("Wilt u nog een mogelijkheid toevoegen?")) {
             addDeliveryOptions();
-        }
-    }
-
-    private boolean choose(String message) {
-
-        String choice = inputString(message).toLowerCase();
-
-        switch (choice) {
-            case "y":
-                return true;
-            case "n":
-                return false;
-            default:
-                System.out.println("ongeldige invoer, y of n");
-                return choose(message);
         }
     }
 

@@ -4,6 +4,7 @@ import com.controller.DAO.VisitorDAO;
 import com.model.DeliveryOption;
 import com.model.Visitor;
 import com.util.exeptions.CustomException;
+import com.util.password.PasswordAuthentication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,17 +12,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.omg.CORBA.Any;
+import org.slf4j.Logger;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class VisitorLoginControllerTest {
+
+    @Mock
+    private Logger log;
 
     @Mock
     private VisitorDAO dao;
@@ -41,7 +47,7 @@ class VisitorLoginControllerTest {
     }
 
     @Test
-    void validLogin() throws Exception {
+    void validLogin() {
         when(dao.getVisitor(any())).thenReturn(visitor);
         Assertions.assertEquals("user",controller.login("email@email.com", "3n$7Q14R0$*V").getUserName());
     }
@@ -53,4 +59,14 @@ class VisitorLoginControllerTest {
             controller.login("email@email.com", "invalidpassword").getUserName();
         });
     }
+    @Test
+    void loginUnexpectedError() throws Exception {
+        RuntimeException exception = new RuntimeException("test");
+        doThrow(exception).when(dao).getVisitor(any());
+
+        controller.login("String", "String");
+
+        verify(log).error("ERROR :", exception);
+    }
+
 }

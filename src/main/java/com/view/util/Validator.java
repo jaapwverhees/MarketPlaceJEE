@@ -27,7 +27,7 @@ public class Validator {
         try{
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
-        }catch(AddressException e){
+        }catch(Exception e){
             return false;
         }
         return true;

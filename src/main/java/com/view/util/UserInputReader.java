@@ -3,20 +3,22 @@ package com.view.util;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+import static com.view.util.Print.print;
+
 public class UserInputReader {
 
     private final static Scanner scanner = new Scanner(System.in);
 
     public static String inputString(String message) {
-        System.out.println(message);
+        print(message);
         return scanner.nextLine();
     }
     public static int inputInt(String message){
-        System.out.println(message);
+        print(message);
         try {
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e){
-            System.out.println("geen geldig cijfer, probeer het nogmaals");
+            print("geen geldig cijfer, probeer het nog eens");
             return inputInt(message);
         }
     }

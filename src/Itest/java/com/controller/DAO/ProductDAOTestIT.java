@@ -19,13 +19,10 @@ import java.util.Set;
 class ProductDAOTestIT {
 
 
-    private Visitor visitor;
+    private final ProductDAO dao = new ProductDAO(Persistence.createEntityManagerFactory("MySQL").createEntityManager());
 
-    private ProductDAO dao = new ProductDAO(Persistence.createEntityManagerFactory("MySQL").createEntityManager());
 
-    private Product product;
-
-    private VisitorDAO visitorDAO = new VisitorDAO(Persistence.createEntityManagerFactory("MySQL").createEntityManager());
+    private final VisitorDAO visitorDAO = new VisitorDAO(Persistence.createEntityManagerFactory("MySQL").createEntityManager());
 
     @BeforeEach
     void setUp() throws Exception {
@@ -40,13 +37,13 @@ class ProductDAOTestIT {
         String zipcode = "5555AZ";
         Set<Category> categories = new HashSet<>();
         categories.add(new Category("category"));
-        visitor = new Visitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
+        Visitor visitor = new Visitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
         visitorDAO.createVisitor(visitor);
 
 
 
         BigDecimal bigDecimal = new BigDecimal("12.5");
-        product = new Product("Article", "Description", visitor, deliveryOptions, categories, bigDecimal);
+        Product product = new Product("Article", "Description", visitor, deliveryOptions, categories, bigDecimal);
         dao.addArticle(product);
 
         bigDecimal = new BigDecimal("13");
@@ -76,7 +73,7 @@ class ProductDAOTestIT {
     }
 
     @Test
-    void getAllProductsreturnsThreeProducts(){
+    void getAllProductsReturnsThreeProducts(){
         List<Product> list = dao.getAllProducts();
         Assertions.assertEquals(3, list.size());
     }

@@ -40,6 +40,10 @@ public class PasswordAuthentication {
         this.random = new SecureRandom();
     }
 
+    public String returnAlgoritm(){
+        return ALGORITHM;
+    }
+
     private static int iterations(int cost) {
         if ((cost < 0) || (cost > 30))
             throw new IllegalArgumentException("cost: " + cost);

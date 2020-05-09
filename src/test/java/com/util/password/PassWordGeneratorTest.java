@@ -31,6 +31,4 @@ class PassWordGeneratorTest {
         assertTrue(StringUtils.containsAny(testString, PassWordGenerator.generatePassword(10)));
 
     }
-
-
 }

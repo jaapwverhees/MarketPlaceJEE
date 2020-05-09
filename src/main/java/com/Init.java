@@ -47,6 +47,6 @@ public class Init {
         }
         //TODO een entitymanager fac voor hele applicatie.
        //new SearchProducts().start();
-        new CreateArticle(visitor).start();
+        //new CreateArticle(visitor).start();
     }
 }

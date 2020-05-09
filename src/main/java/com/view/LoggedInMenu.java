@@ -13,13 +13,18 @@ public class LoggedInMenu {
     }
 
     public void start() {
-        System.out.println("Welkom to BDMarketplace, uw opties:\n\n" +
+
+        System.out.println(displayOptions());
+
+        options(inputString("voer uw keuze in;"));
+    }
+
+    private String displayOptions() {
+        return "Welkom to BDMarketplace, uw opties:\n\n" +
                 "1: voer artikel in\n" +
                 "2: zoek product\n" +
                 "3: log uit\n" +
-                "4: sluit af\n\n");
-
-        options(inputString("voer uw keuze in;"));
+                "4: sluit af\n\n";
     }
 
     private void options(String input) {

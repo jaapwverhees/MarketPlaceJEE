@@ -3,10 +3,9 @@ package com.view;
 import com.controller.VisitorController;
 import com.model.DeliveryOption;
 import com.view.util.FileReader;
-import com.view.util.Validator;
+import com.view.util.UserInputReader;
 
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 import static com.view.util.ControllerService.getVisitorController;
@@ -14,11 +13,14 @@ import static com.view.util.UserInputReader.inputString;
 import static com.view.util.Validator.chooseYOrN;
 import static com.view.util.Validator.validEmailAddress;
 
+//TODO make a call to backend to get deliveryoptions.
+
+//TODO return voorwaarden from backend
 public class CreateAccount {
 
-    private static final Scanner scanner = new Scanner(System.in);
     private final Set<DeliveryOption> deliveryOptions = new HashSet<>();
     VisitorController controller = getVisitorController();
+    private String userName;
     private String email;
     private String streetName;
     private int streetNumber;
@@ -29,20 +31,32 @@ public class CreateAccount {
 
         voorwaarden();
 
-        String userName = inputString("Voer uw gebruikernaam in:");
+        userName = inputString("Voer uw gebruikernaam in:");
 
-        String email = createEmail();
+        email = createEmail();
+
+        displayDeliverOptions();
 
         addDeliveryOptions();
 
-        if (this.deliveryOptions.contains(DeliveryOption.PICKUPFROMHOME)) {
+        if (createAddressOrNot()) {
             createAdress();
-        } else {
-            if (chooseYOrN("Wilt u uw adres toevoegen? (y/n)")) {
-                createAdress();
-            }
         }
 
+        registerAccount();
+
+        new MainMenu().start();
+    }
+
+    private void displayDeliverOptions() {
+        System.out.println("bezorgopties zijn:" +
+                "1.    PICKUPFROMHOME,\n" +
+                "2.    WAREHOUSE,\n" +
+                "3.    DELIVERY,\n" +
+                "4.    PAYONDELIVERY");
+    }
+
+    private void registerAccount() {
         if (streetName == null) {
             System.out.println(controller.registerVisitor(userName, email, deliveryOptions));
         } else if (suffix == null) {
@@ -50,8 +64,14 @@ public class CreateAccount {
         } else {
             System.out.println(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode));
         }
+    }
 
-        new MainMenu().start();
+    private boolean createAddressOrNot() {
+        if (this.deliveryOptions.contains(DeliveryOption.PICKUPFROMHOME)) {
+            return true;
+        } else {
+            return chooseYOrN("Wilt u uw adres toevoegen? (y/n)");
+        }
     }
 
     private void voorwaarden() {
@@ -67,7 +87,8 @@ public class CreateAccount {
     private String createEmail() {
         String email = inputString("Voer uw emailadres in");
 
-        if(!validEmailAddress(this.email)){
+        if (!validEmailAddress(email)) {
+            System.out.println("emailadres is niet geldig");
             return createEmail();
         }
         return email;
@@ -75,35 +96,21 @@ public class CreateAccount {
 
 
     private void createAdress() {
-        try {
-            System.out.println("Voer uw straatnaam in");
-            this.streetName = String.valueOf(scanner.nextLine());
+        this.streetName = inputString("Voer uw straatnaam in");
 
-            System.out.println("Voer uw huisnummer in");
-            this.streetNumber = Integer.parseInt(scanner.nextLine());
+        this.streetNumber = UserInputReader.inputInt("Voer uw huisnummer in");
 
-            System.out.println("Voer uw huisnummer-suffix in. heeft u die niet, druk dan op enter");
-            this.suffix = String.valueOf(scanner.nextLine());
-            if (suffix.equals("")) {
-                this.suffix = null;
-            }
-            System.out.println("Voer uw postcode in");
-            this.zipcode = String.valueOf(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("ongeldig huisnummer, probeer opnieuw");
-            createAdress();
+        this.suffix = inputString("Voer uw huisnummer-suffix in. heeft u die niet, druk dan op enter");
+
+        if (suffix.equals("")) {
+            this.suffix = null;
         }
+
+        this.zipcode = inputString("Voer uw postcode in");
     }
 
     private void addDeliveryOptions() {
-        System.out.println("bezorgopties zijn:" +
-                "1.    PICKUPFROMHOME,\n" +
-                "2.    WAREHOUSE,\n" +
-                "3.    DELIVERY,\n" +
-                "4.    PAYONDELIVERY");
-
-        System.out.println("voeg een bezorgoptie toe");
-        String option = String.valueOf(scanner.nextLine());
+        String option = inputString("voeg een bezorgoptie toe");
         switch (option) {
             case "1":
                 deliveryOptions.add(DeliveryOption.PICKUPFROMHOME);

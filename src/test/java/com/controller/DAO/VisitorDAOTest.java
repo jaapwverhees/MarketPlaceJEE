@@ -51,7 +51,9 @@ class VisitorDAOTest {
         doNothing().when(entityTransactionMock).begin();
         doNothing().when(entityTransactionMock).commit();
 
-        dao.createVisitor(new Visitor());
+        Visitor visitor = new Visitor();
+        visitor.setPassword("testtest");
+        dao.createVisitor(visitor);
 
         verify(emMock).persist(isA(Visitor.class));
         verify(emMock, atLeastOnce()).getTransaction();

@@ -1,7 +1,6 @@
 package com.controller;
 
 import com.controller.DAO.VisitorDAO;
-import com.controller.DAO.VisitorDAOable;
 import com.model.DeliveryOption;
 import com.model.Visitor;
 import com.util.exeptions.CustomException;
@@ -10,20 +9,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.mail.MessagingException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Set;
 
 public class VisitorController {
 
     private static final String succesResponse = "invoer succesvol! Er is een email verstuurd naar uw opgegeven emailadres";
 
-    //@Inject
-    private Logger errorLogger = LoggerFactory.getLogger(this.getClass());
+    private final Logger errorLogger = LoggerFactory.getLogger(this.getClass());
 
-    //@Inject
-    private VisitorDAOable visitorDAO = new VisitorDAO();
+    //Mocked by mockito during tests, cannot be final.
+    @SuppressWarnings("FieldMayBeFinal")
+    private VisitorDAO visitorDAO = new VisitorDAO();
 
-    //@Inject
+    //Mocked by mockito during tests, cannot be final.
+    @SuppressWarnings("FieldMayBeFinal")
     private MailService mailService = new MailService();
 
     public String registerVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions, String streetName, int streetNumber, String suffix, String zipcode) {
@@ -53,7 +52,6 @@ public class VisitorController {
     }
 
     public String registerVisitor(String userName, String email, Set<DeliveryOption> deliveryOptions) {
-
         try {
             Visitor visitor = new Visitor(userName, email, deliveryOptions);
             String password = visitor.getPassword();
@@ -63,10 +61,6 @@ public class VisitorController {
             return exceptionHandler(e);
         }
         return succesResponse;
-    }
-
-    public void setMailService(MailService mailService) {
-        this.mailService = mailService;
     }
 
     private void sendConfirmationEmail(Visitor visitor, String password) throws MessagingException {
@@ -85,17 +79,14 @@ public class VisitorController {
     }
 
     private String exceptionHandler(Exception e) {
-
         if (e instanceof CustomException) {
             return e.getMessage();
-        } else if (e instanceof SQLIntegrityConstraintViolationException) {
-            return "Kon account niet creëren, email adres al in gebruik.";
         } else if (e instanceof MessagingException) {
-            errorLogger.error("Error", e);
+            errorLogger.error("Error: ", e);
             return "Er heeft een fout plaats gevonden, en uw wachtwoord kan niet worden verzonden. Er word contact met u opgenomen";
         } else {
             errorLogger.error("Error", e);
-            return "Er heeft een overwachte fout plaatsgevonden" + e.getMessage();
+            return "Er heeft een overwachte fout plaatsgevonden: " + e.getMessage();
         }
     }
 }

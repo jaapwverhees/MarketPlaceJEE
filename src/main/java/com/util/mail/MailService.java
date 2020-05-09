@@ -9,7 +9,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
-
+//TODO Use propertiesReader
 public class MailService {
 
     private static final String SMTP_SERVER = "smtp.gmail.com.";

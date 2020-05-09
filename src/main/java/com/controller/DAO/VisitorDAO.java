@@ -1,36 +1,41 @@
 package com.controller.DAO;
 
 import com.model.Visitor;
+import com.util.exeptions.CustomException;
 import com.util.password.PasswordAuthentication;
 import com.util.producers.EntityManagerProducer;
 
 import javax.persistence.EntityManager;
+import javax.persistence.RollbackException;
 
-public class VisitorDAO implements VisitorDAOable {
+public class VisitorDAO {
 
-
-    private PasswordAuthentication aut = new PasswordAuthentication();
+    private final PasswordAuthentication aut = new PasswordAuthentication();
 
     private EntityManager entityManager = EntityManagerProducer.getEntityManager();
 
-    public VisitorDAO() {
-    }
+    public VisitorDAO() {}
 
     public VisitorDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    @Override
-    public Visitor getVisitor(String email) throws Exception {
+
+    public Visitor getVisitor(String email) {
         return entityManager.find(Visitor.class, email);
     }
 
-    @Override
     public void createVisitor(Visitor visitor) throws Exception {
-        visitor.setPassword(aut.hash(visitor.getPassword()));
-        entityManager.getTransaction().begin();
-        entityManager.persist(visitor);
-        entityManager.getTransaction().commit();
-    }
 
+        visitor.setPassword(aut.hash(visitor.getPassword()));
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(visitor);
+            entityManager.getTransaction().commit();
+        }catch(RollbackException e){
+            throw new CustomException("Emailadres is al in gebruik");
+        }finally {
+            entityManager.detach(visitor);
+        }
+    }
 }

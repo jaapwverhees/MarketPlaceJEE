@@ -34,7 +34,7 @@ class ProductDAOTest {
     @Mock
     private EntityTransaction entityTransactionMock;
     @InjectMocks
-    private ProductDAO dao = new ProductDAO();
+    private final ProductDAO dao = new ProductDAO();
 
     @BeforeEach
     void setup() {
@@ -99,7 +99,7 @@ class ProductDAOTest {
 
 
     @Test
-    void addCategory() throws Exception {
+    void addCategory() {
         when(emMock.getTransaction()).thenReturn(entityTransactionMock);
         doNothing().when(entityTransactionMock).begin();
         doNothing().when(entityTransactionMock).commit();

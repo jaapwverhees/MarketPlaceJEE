@@ -2,32 +2,24 @@ package com.controller.DAO;
 
 import com.model.product.Category;
 import com.model.product.Product;
-import com.util.exeptions.CustomException;
-import com.util.password.PasswordAuthentication;
 import com.util.producers.EntityManagerProducer;
 
-import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class ProductDAO {
 
-    private PasswordAuthentication aut = new PasswordAuthentication();
-
     private EntityManager entityManager = EntityManagerProducer.getEntityManager();
 
-    public ProductDAO() {
-    }
+    public ProductDAO() {}
 
     public ProductDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    public void addArticle(Product product) throws Exception {
+    public void addArticle(Product product) {
         entityManager.getTransaction().begin();
         entityManager.persist(product);
         entityManager.getTransaction().commit();
@@ -63,7 +55,7 @@ public class ProductDAO {
     }
 
     //TODO admin validation
-    public void addCategory(Category category) throws Exception {
+    public void addCategory(Category category) {
         entityManager.getTransaction().begin();
         entityManager.persist(category);
         entityManager.getTransaction().commit();

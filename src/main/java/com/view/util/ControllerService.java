@@ -1,10 +1,8 @@
 package com.view.util;
 
-import com.controller.DAO.ProductDAO;
 import com.controller.ProductController;
 import com.controller.VisitorController;
 import com.controller.VisitorLoginController;
-import com.model.product.Product;
 
 public class ControllerService {
 

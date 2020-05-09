@@ -1,13 +1,10 @@
 package com.util.propertiesloader;
 
 
-import org.hibernate.internal.util.xml.ErrorLogger;
-import org.slf4j.Logger;
-
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
 
 public class MyProperties {
 

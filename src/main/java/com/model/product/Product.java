@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
@@ -32,6 +31,7 @@ public class Product extends AbstractEntity {
     @ManyToMany(cascade = ALL)
     private Set<Category> categories = new HashSet<>();
 
+    //TODO implement
     @OneToMany
     private Set<Multimedia> multimedia = new HashSet<>();
 
@@ -39,6 +39,9 @@ public class Product extends AbstractEntity {
     }
 
     public Product(String name, String description, Visitor supplier, Set<DeliveryOption> deliveryOptions, Set<Category> categories, BigDecimal price) {
+        //TODO fix these checkers
+        //if (deliveryOptions.isEmpty()) throw new CustomException("Must contain DeliveryOption");
+        //if(deliveryOptions.contains(PICKUPFROMHOME) && supplier.getAddress().equals(null)) throw new CustomException("");
         this.name = name;
         this.description = description;
         this.supplier = supplier;

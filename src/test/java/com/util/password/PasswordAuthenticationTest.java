@@ -1,6 +1,12 @@
 package com.util.password;
 
+import com.model.Visitor;
+import com.util.exeptions.CustomException;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,4 +30,5 @@ class PasswordAuthenticationTest {
         String token = passwordAuthentication.hash("theCorrectpassword");
         assertFalse(passwordAuthentication.authenticate("theNewpassword".toCharArray(), token));
     }
+
 }

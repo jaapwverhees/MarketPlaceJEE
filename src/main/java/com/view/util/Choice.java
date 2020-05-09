@@ -1,6 +1,5 @@
 package com.view.util;
 
-import static com.view.util.UserInputReader.inputString;
-
+@Deprecated
 public class Choice {
 }

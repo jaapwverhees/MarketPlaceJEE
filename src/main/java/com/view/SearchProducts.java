@@ -16,11 +16,13 @@ public class SearchProducts {
     private final ProductController controller = getProductController();
 
     public void start() {
-        searchOptions(inputString(displayOptions()));
+        System.out.println(displayOptions());
+
+        searchOptions(inputString("Voer het gewenste nummer in"));
     }
 
     public String displayOptions() {
-        return "waarop wilt u zoeken?\n" +
+        return "Zoekopties:\n" +
                 "1:     categorie\n" +
                 "2:     prijs\n" +
                 "3:     naam\n" +
