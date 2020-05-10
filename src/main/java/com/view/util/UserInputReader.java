@@ -13,22 +13,23 @@ public class UserInputReader {
         print(message);
         return scanner.nextLine();
     }
-    public static int inputInt(String message){
+
+    public static int inputInt(String message) {
         print(message);
         try {
             return Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             print("geen geldig cijfer, probeer het nog eens");
             return inputInt(message);
         }
     }
 
     public static BigDecimal inputBigDecimal(String message) {
-        System.out.println(message);
+        print(message);
         try {
             return BigDecimal.valueOf(Double.parseDouble(scanner.nextLine()));
-        }catch (NumberFormatException e) {
-            System.out.println("geen geldig nummer, decimalen moeten gescheiden worden door een punt.");
+        } catch (NumberFormatException e) {
+            print("geen geldig nummer, decimalen moeten gescheiden worden door een punt.");
             return inputBigDecimal(message);
         }
     }

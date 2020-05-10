@@ -2,8 +2,10 @@ package com.view;
 
 import com.controller.VisitorLoginController;
 import com.model.Visitor;
+import com.view.util.Print;
 
 import static com.view.util.ControllerService.getVisitorLoginController;
+import static com.view.util.Print.print;
 import static com.view.util.UserInputReader.inputString;
 
 public class LoginMenu {
@@ -17,7 +19,7 @@ public class LoginMenu {
 
         Visitor visitor = controller.login(email, password);
         if (visitor == null) {
-            System.out.println("Invalid credentials, returning to main menu...");
+            print("Invalid credentials, returning to main menu...");
             MainMenu mainMenu = new MainMenu();
             mainMenu.start();
         } else {

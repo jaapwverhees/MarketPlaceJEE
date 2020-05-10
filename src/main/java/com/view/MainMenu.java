@@ -1,11 +1,14 @@
 package com.view;
 
+import com.view.util.Print;
+
+import static com.view.util.Print.print;
 import static com.view.util.UserInputReader.inputString;
 
 public class MainMenu {
 
     public void start() {
-        System.out.println(displayOptions());
+        print(displayOptions());
 
         options(inputString("Voer uw keuze in"));
     }
@@ -28,7 +31,7 @@ public class MainMenu {
             case "3":
                 System.exit(0);
             default:
-                System.out.println("Invalid input, returning to main menu...");
+                print("Invalid input, returning to main menu...");
                 start();
         }
     }

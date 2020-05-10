@@ -1,7 +1,9 @@
 package com.view;
 
 import com.model.Visitor;
+import com.view.util.Print;
 
+import static com.view.util.Print.print;
 import static com.view.util.UserInputReader.inputString;
 
 public class LoggedInMenu {
@@ -14,7 +16,7 @@ public class LoggedInMenu {
 
     public void start() {
 
-        System.out.println(displayOptions());
+        print(displayOptions());
 
         options(inputString("voer uw keuze in;"));
     }
@@ -40,7 +42,7 @@ public class LoggedInMenu {
             case "4":
                 System.exit(0);
             default:
-                System.out.println("verkeerde invoer, selecteer opnieuw uw keuze...");
+                print("verkeerde invoer, selecteer opnieuw uw keuze...");
                 start();
         }
     }

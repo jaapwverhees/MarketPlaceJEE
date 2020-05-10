@@ -3,11 +3,13 @@ package com.view;
 import com.controller.ProductController;
 import com.model.product.Category;
 import com.model.product.Product;
+import com.view.util.Print;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static com.view.util.ControllerService.getProductController;
+import static com.view.util.Print.print;
 import static com.view.util.UserInputReader.*;
 import static com.view.util.Validator.validChoiceFromList;
 
@@ -16,7 +18,7 @@ public class SearchProducts {
     private final ProductController controller = getProductController();
 
     public void start() {
-        System.out.println(displayOptions());
+        print(displayOptions());
 
         searchOptions(inputString("Voer het gewenste nummer in"));
     }
@@ -47,7 +49,7 @@ public class SearchProducts {
             case "5":
                 System.exit(0);
             default:
-                System.out.println("verkeerde invoer, selecteer opnieuw uw keuze...");
+                print("verkeerde invoer, selecteer opnieuw uw keuze...");
                 start();
         }
     }
@@ -67,7 +69,7 @@ public class SearchProducts {
         BigDecimal maximum = inputBigDecimal("Voer het maximum bedrag in");
         List<Product> products = controller.getProductsByPrice(minimum, maximum);
         if (products.isEmpty()) {
-            System.out.println("Geen producten gevonden binnen deze waarden");
+            print("Geen producten gevonden binnen deze waarden");
         } else {
             displayProducts(products);
         }
@@ -81,24 +83,24 @@ public class SearchProducts {
             List<Product> productList = controller.getProductsByCategory(categoryList.get(choice - 1).getDescription());
             displayProducts(productList);
         } else {
-            System.out.println("ongeldige keuze, probeer het opnieuw");
+            print("ongeldige keuze, probeer het opnieuw");
             category();
         }
     }
 
     private void displayCategories(List<Category> categoryList) {
-        System.out.println("De categorien zijn:");
+        print("De categorien zijn:");
         for (int i = 0; i < categoryList.size(); i++) {
-            System.out.printf("productnummer:   %s\ndescription:    %s\n\n", i + 1, categoryList.get(i).getDescription());
+            print("productnummer:   %s\ndescription:    %s\n\n", i + 1, categoryList.get(i).getDescription());
         }
     }
 
     private void displayProducts(List<Product> productList) {
         if (productList.isEmpty()) {
-            System.out.println("geen overeenkomende resultaten");
+            print("geen overeenkomende resultaten");
         } else {
             for (Product product : productList) {
-                System.out.printf("     ---product---\n" +
+                print("     ---product---\n" +
                                 "name: %s\n" +
                                 "price: %s\n" +
                                 "deliveryOptions: %s\n" +

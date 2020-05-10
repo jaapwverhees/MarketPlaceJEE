@@ -1,9 +1,9 @@
 package com.view.util;
 
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import java.util.List;
 
+import static com.view.util.Print.print;
 import static com.view.util.UserInputReader.inputString;
 
 public class Validator {
@@ -19,15 +19,16 @@ public class Validator {
             case "n":
                 return false;
             default:
-                System.out.println("ongeldige invoer");
+                print("ongeldige invoer");
                 return chooseYOrN(message);
         }
     }
-    public static boolean validEmailAddress(String email){
-        try{
+
+    public static boolean validEmailAddress(String email) {
+        try {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
-        }catch(Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;

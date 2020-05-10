@@ -12,7 +12,7 @@ import static com.view.util.ControllerService.getVisitorController;
 import static com.view.util.UserInputReader.inputString;
 import static com.view.util.Validator.chooseYOrN;
 import static com.view.util.Validator.validEmailAddress;
-
+import static com.view.util.Print.print;
 //TODO make a call to backend to get deliveryoptions.
 
 //TODO return voorwaarden from backend
@@ -49,7 +49,7 @@ public class CreateAccount {
     }
 
     private void displayDeliverOptions() {
-        System.out.println("bezorgopties zijn:" +
+        print("bezorgopties zijn:" +
                 "1.    PICKUPFROMHOME,\n" +
                 "2.    WAREHOUSE,\n" +
                 "3.    DELIVERY,\n" +
@@ -58,11 +58,11 @@ public class CreateAccount {
 
     private void registerAccount() {
         if (streetName == null) {
-            System.out.println(controller.registerVisitor(userName, email, deliveryOptions));
+            print(controller.registerVisitor(userName, email, deliveryOptions));
         } else if (suffix == null) {
-            System.out.println(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, zipcode));
+            print(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, zipcode));
         } else {
-            System.out.println(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode));
+            print(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode));
         }
     }
 
@@ -75,10 +75,10 @@ public class CreateAccount {
     }
 
     private void voorwaarden() {
-        System.out.println("Indien u gebruik wil maken van de DB Marketplace moet u akkoort gaan met de volgende voorwaarden;\n\n" +
+        print("Indien u gebruik wil maken van de DB Marketplace moet u akkoort gaan met de volgende voorwaarden;\n\n" +
                 FileReader.read("files/provisions"));
         if (!chooseYOrN("Gaat u akkoort? (y/n)")) {
-            System.out.println("Terug naar het hooftmenu....");
+            print("Terug naar het hooftmenu....");
             new MainMenu().start();
         }
 
@@ -88,7 +88,7 @@ public class CreateAccount {
         String email = inputString("Voer uw emailadres in");
 
         if (!validEmailAddress(email)) {
-            System.out.println("emailadres is niet geldig");
+            print("emailadres is niet geldig");
             return createEmail();
         }
         return email;
@@ -125,11 +125,11 @@ public class CreateAccount {
                 deliveryOptions.add(DeliveryOption.PAYONDELIVERY);
                 break;
             default:
-                System.out.println("invalid input, try again");
+                print("ongeldige invoer, probeer opnieuw");
                 addDeliveryOptions();
         }
         if (!deliveryOptions.isEmpty()) {
-            System.out.println("your delivery options are:\n" + deliveryOptions.toString());
+            print("your delivery options are:\n" + deliveryOptions.toString());
             if (chooseYOrN("Wilt u nog een optie toevoegen?(y/n)")) {
                 addDeliveryOptions();
             }

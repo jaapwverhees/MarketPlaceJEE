@@ -5,6 +5,8 @@ import com.model.DeliveryOption;
 import com.model.Visitor;
 import com.model.product.Category;
 import com.model.product.PriceType;
+import com.view.util.Print;
+import jdk.internal.org.objectweb.asm.util.Printer;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -14,6 +16,7 @@ import java.util.Set;
 import static com.model.product.PriceType.TotalPrice;
 import static com.model.product.PriceType.hourlyRate;
 import static com.view.util.ControllerService.getProductController;
+import static com.view.util.Print.print;
 import static com.view.util.UserInputReader.*;
 import static com.view.util.Validator.chooseYOrN;
 
@@ -57,9 +60,9 @@ public class CreateArticle {
     private void createServiceOrProduct() {
         if (chooseYOrN("is het product een dienst?")) {
             PriceType priceType = setPriceType();
-            System.out.println(controller.addService(name, description, visitor, deliveryOptions, productCategories, price, priceType));
+            print(controller.addService(name, description, visitor, deliveryOptions, productCategories, price, priceType));
         } else {
-            System.out.println(controller.addArticle(name, description, visitor, deliveryOptions, productCategories, price));
+            print(controller.addArticle(name, description, visitor, deliveryOptions, productCategories, price));
         }
     }
 
@@ -70,7 +73,8 @@ public class CreateArticle {
         } else if (TotalPrice.name().equalsIgnoreCase(choice)) {
             return TotalPrice;
         } else {
-            System.out.println("ongeldige invoer, probeer opnieuw");
+            print("ongeldige invoer, probeer opnieuw");
+            print("ongeldige invoer, probeer opnieuw");
             return setPriceType();
         }
     }
@@ -79,7 +83,7 @@ public class CreateArticle {
 
         int choice = inputInt("Voer uw gewenste Categorie in") - 1;
         if (choice < 0 || choice > possibleCategoryList.size()) {
-            System.out.println("ongeldige invoer, probeer het nogmaals");
+            print("ongeldige invoer, probeer het nogmaals");
             return addCategoryOption(categories);
         } else {
             categories.add(possibleCategoryList.get(choice));
@@ -91,11 +95,11 @@ public class CreateArticle {
     }
 
     private void displayPossibleCategoryOptions() {
-        System.out.println("De  categorieen zijn:");
+        print("De  categorieen zijn:");
         for (int i = 0; i < possibleCategoryList.size(); i++) {
-            System.out.printf("%s:  %s\n", i + 1, possibleCategoryList.get(i));
+            print("%s:  %s\n", i + 1, possibleCategoryList.get(i));
         }
-        System.out.println();
+        print();
     }
 
     private void addDeliveryOptions() {
@@ -108,7 +112,7 @@ public class CreateArticle {
             }
         }
         if (checker) {
-            System.out.println("ongeldige invoer, probeer het nogmaals");
+            print("ongeldige invoer, probeer het nogmaals");
             addDeliveryOptions();
         } else if (chooseYOrN("Wilt u nog een mogelijkheid toevoegen?")) {
             addDeliveryOptions();
@@ -116,9 +120,9 @@ public class CreateArticle {
     }
 
     private void displayDeliveryOptions() {
-        System.out.println("De leveringsmogelijkheden zijn:");
+        print("De leveringsmogelijkheden zijn:");
         for (DeliveryOption deliveryOption : visitor.getDeliveryOptions()) {
-            System.out.println(deliveryOption.toString());
+            print(deliveryOption.toString());
         }
     }
 }
