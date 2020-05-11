@@ -35,34 +35,34 @@ public class CreateAccount {
 
         email = createEmail();
 
-        displayDeliverOptions();
+        print(displayDeliverOptions());
 
         addDeliveryOptions();
 
         if (createAddressOrNot()) {
-            createAdress();
+            createAddress();
         }
 
-        registerAccount();
+        print(registerAccount());
 
         new MainMenu().start();
     }
 
-    private void displayDeliverOptions() {
-        print("bezorgopties zijn:" +
+    private String displayDeliverOptions() {
+        return "bezorgopties zijn:" +
                 "1.    PICKUPFROMHOME,\n" +
                 "2.    WAREHOUSE,\n" +
                 "3.    DELIVERY,\n" +
-                "4.    PAYONDELIVERY");
+                "4.    PAYONDELIVERY";
     }
 
-    private void registerAccount() {
+    private String registerAccount() {
         if (streetName == null) {
-            print(controller.registerVisitor(userName, email, deliveryOptions));
+            return controller.registerVisitor(userName, email, deliveryOptions);
         } else if (suffix == null) {
-            print(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, zipcode));
+            return controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, zipcode);
         } else {
-            print(controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode));
+            return controller.registerVisitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
         }
     }
 
@@ -95,7 +95,7 @@ public class CreateAccount {
     }
 
 
-    private void createAdress() {
+    private void createAddress() {
         this.streetName = inputString("Voer uw straatnaam in");
 
         this.streetNumber = UserInputReader.inputInt("Voer uw huisnummer in");
@@ -113,13 +113,13 @@ public class CreateAccount {
         String option = inputString("voeg een bezorgoptie toe");
         switch (option) {
             case "1":
-                deliveryOptions.add(DeliveryOption.PICKUPFROMHOME);
+                this.deliveryOptions.add(DeliveryOption.PICKUPFROMHOME);
                 break;
             case "2":
-                deliveryOptions.add(DeliveryOption.WAREHOUSE);
+                this.deliveryOptions.add(DeliveryOption.WAREHOUSE);
                 break;
             case "3":
-                deliveryOptions.add(DeliveryOption.DELIVERY);
+                this.deliveryOptions.add(DeliveryOption.DELIVERY);
                 break;
             case "4":
                 deliveryOptions.add(DeliveryOption.PAYONDELIVERY);

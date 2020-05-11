@@ -28,6 +28,7 @@ public class Init {
     public void start() throws CustomException {
         deliveryOptions.add(DeliveryOption.WAREHOUSE);
         Visitor visitor = new Visitor("jaapie", "test@test.nl",deliveryOptions);
+        visitor.setPassword("MyPassword");
         try {
             visitorDAO.createVisitor(visitor);
             Category electronics = new Category("Electronics");

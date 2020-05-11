@@ -5,8 +5,6 @@ import com.model.DeliveryOption;
 import com.model.Visitor;
 import com.model.product.Category;
 import com.model.product.PriceType;
-import com.view.util.Print;
-import jdk.internal.org.objectweb.asm.util.Printer;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -42,11 +40,11 @@ public class CreateArticle {
 
         this.description = inputString("voer de beschrijving in");
 
-        displayDeliveryOptions();
+        print(displayDeliveryOptions());
 
         addDeliveryOptions();
 
-        displayPossibleCategoryOptions();
+        print(displayPossibleCategoryOptions());
 
         productCategories = addCategoryOption(productCategories);
 
@@ -74,7 +72,6 @@ public class CreateArticle {
             return TotalPrice;
         } else {
             print("ongeldige invoer, probeer opnieuw");
-            print("ongeldige invoer, probeer opnieuw");
             return setPriceType();
         }
     }
@@ -94,12 +91,12 @@ public class CreateArticle {
         return categories;
     }
 
-    private void displayPossibleCategoryOptions() {
-        print("De  categorieen zijn:");
+    private String displayPossibleCategoryOptions() {
+        StringBuilder stringBuilder = new StringBuilder("De  categorieen zijn:\n");
         for (int i = 0; i < possibleCategoryList.size(); i++) {
-            print("%s:  %s\n", i + 1, possibleCategoryList.get(i));
+            stringBuilder.append(String.format("%s:  %s\n", i + 1, possibleCategoryList.get(i)));
         }
-        print();
+        return stringBuilder.toString();
     }
 
     private void addDeliveryOptions() {
@@ -119,10 +116,11 @@ public class CreateArticle {
         }
     }
 
-    private void displayDeliveryOptions() {
-        print("De leveringsmogelijkheden zijn:");
+    private String displayDeliveryOptions() {
+        StringBuilder string = new StringBuilder("De leveringsmogelijkheden zijn:");
         for (DeliveryOption deliveryOption : visitor.getDeliveryOptions()) {
-            print(deliveryOption.toString());
+            string.append(deliveryOption.toString());
         }
+        return string.toString();
     }
 }

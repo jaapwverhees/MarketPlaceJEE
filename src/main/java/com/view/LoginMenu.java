@@ -2,7 +2,6 @@ package com.view;
 
 import com.controller.VisitorLoginController;
 import com.model.Visitor;
-import com.view.util.Print;
 
 import static com.view.util.ControllerService.getVisitorLoginController;
 import static com.view.util.Print.print;

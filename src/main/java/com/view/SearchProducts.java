@@ -1,6 +1,7 @@
 package com.view;
 
 import com.controller.ProductController;
+import com.model.Visitor;
 import com.model.product.Category;
 import com.model.product.Product;
 import com.view.util.Print;
@@ -17,10 +18,19 @@ public class SearchProducts {
 
     private final ProductController controller = getProductController();
 
+    private Visitor visitor;
+
+
+    public SearchProducts(Visitor visitor) {
+        this.visitor = visitor;
+    }
+
     public void start() {
         print(displayOptions());
 
         searchOptions(inputString("Voer het gewenste nummer in"));
+
+        start();
     }
 
     public String displayOptions() {
@@ -29,7 +39,9 @@ public class SearchProducts {
                 "2:     prijs\n" +
                 "3:     naam\n" +
                 "4:     laat alle artikelen zien\n" +
-                "5:     exit";
+                "Andere Opties:\n" +
+                "5:     terug naar Menu\n" +
+                "6:     exit\n";
     }
 
     private void searchOptions(String input) {
@@ -47,7 +59,8 @@ public class SearchProducts {
                 showAllProducts();
                 break;
             case "5":
-                System.exit(0);
+                new LoggedInMenu(visitor).start();
+                break;
             default:
                 print("verkeerde invoer, selecteer opnieuw uw keuze...");
                 start();

@@ -32,10 +32,10 @@ public class LoggedInMenu {
     private void options(String input) {
         switch (input) {
             case "1":
-                new CreateArticle(visitor).start();
+                new CreateArticle(this.visitor).start();
                 break;
             case "2":
-                new SearchProducts().start();
+                new SearchProducts(this.visitor).start();
                 break;
             case "3":
                 new MainMenu().start();
