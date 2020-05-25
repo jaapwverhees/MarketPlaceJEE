@@ -43,17 +43,18 @@ public class CreateAccount {
             createAddress();
         }
 
-        print(registerAccount());
+        print(registerAccount()+"\n\n");
 
         new MainMenu().start();
     }
 
+    //TODO haal uit uit DB
     private String displayDeliverOptions() {
         return "bezorgopties zijn:" +
                 "1.    PICKUPFROMHOME,\n" +
                 "2.    WAREHOUSE,\n" +
                 "3.    DELIVERY,\n" +
-                "4.    PAYONDELIVERY";
+                "4.    PAYONDELIVERY\n";
     }
 
     private String registerAccount() {
@@ -88,7 +89,7 @@ public class CreateAccount {
         String email = inputString("Voer uw emailadres in");
 
         if (!validEmailAddress(email)) {
-            print("emailadres is niet geldig");
+            print("emailadres is niet geldig\n");
             return createEmail();
         }
         return email;

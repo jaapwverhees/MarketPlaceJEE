@@ -18,11 +18,9 @@ import java.util.Set;
 
 class ProductDAOTestIT {
 
+    private final ProductDAO dao = new ProductDAO(Persistence.createEntityManagerFactory("H2").createEntityManager());
 
-    private final ProductDAO dao = new ProductDAO(Persistence.createEntityManagerFactory("MySQL").createEntityManager());
-
-
-    private final VisitorDAO visitorDAO = new VisitorDAO(Persistence.createEntityManagerFactory("MySQL").createEntityManager());
+    private final VisitorDAO visitorDAO = new VisitorDAO(Persistence.createEntityManagerFactory("H2").createEntityManager());
 
     @BeforeEach
     void setUp() throws Exception {

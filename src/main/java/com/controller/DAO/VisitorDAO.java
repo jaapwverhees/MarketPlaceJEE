@@ -25,6 +25,7 @@ public class VisitorDAO {
         return entityManager.find(Visitor.class, email);
     }
 
+    //TODO bug after creation 2nd visitor in 1 session: A different object with the same identifier value was already associated with the session
     public void createVisitor(Visitor visitor) throws Exception {
 
         visitor.setPassword(aut.hash(visitor.getPassword()));

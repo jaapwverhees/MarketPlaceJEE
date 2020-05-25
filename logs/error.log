@@ -1,2 +1,2 @@
-[ERROR] 2020-05-09 21:37:34.070 [main] SqlExceptionHelper - Unique index or primary key violation: "PUBLIC.PRIMARY_KEY_4 ON PUBLIC.VISITOR(EMAIL) VALUES 1"; SQL statement:
-insert into visitor (streetName, streetNumber, suffix, zipcode, password, userName, email) values (?, ?, ?, ?, ?, ?, ?) [23505-200]
+[ERROR] 2020-05-11 14:57:44.377 [main] SqlExceptionHelper - Value too long for column "USERNAME VARCHAR(255)": "'jaapfewfwefwefwefwefwefwfwefwefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff... (323)"; SQL statement:
+insert into visitor (streetName, streetNumber, suffix, zipcode, password, userName, email) values (?, ?, ?, ?, ?, ?, ?) [22001-200]

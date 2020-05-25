@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class MyProperties {
 
-    private static final String fileName = "META-INF/log4j.properties";
+    private static String fileName = "META-INF/props.properties";
 
     static Properties prop = new Properties();
 
@@ -22,5 +22,9 @@ public class MyProperties {
 
     public static String get(String key) {
         return prop.getProperty(key);
+    }
+
+    public static void setFileName(String newFileName){
+        fileName = newFileName;
     }
 }

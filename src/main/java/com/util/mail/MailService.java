@@ -1,6 +1,7 @@
 package com.util.mail;
 
 import com.sun.mail.smtp.SMTPTransport;
+import com.util.propertiesloader.MyProperties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -14,11 +15,11 @@ public class MailService {
 
     private static final String SMTP_SERVER = "smtp.gmail.com.";
 
-    private static final String USERNAME = "thebdmarketplace@gmail.com";
+    private static final String USERNAME = MyProperties.get("EMAILADDRESS");
 
-    private static final String PASSWORD = "ZeroCool01#";
+    private static final String PASSWORD = MyProperties.get("PASSWORD");
 
-    private static final String EMAIL_FROM = "thebdmarketplace@gmail.com";
+    private static final String EMAIL_FROM = MyProperties.get("EMAILADDRESS");
 
     public void sendMail(String emailTo, String subject, String emailText) throws MessagingException {
 

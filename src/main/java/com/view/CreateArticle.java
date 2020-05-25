@@ -94,7 +94,7 @@ public class CreateArticle {
     private String displayPossibleCategoryOptions() {
         StringBuilder stringBuilder = new StringBuilder("De  categorieen zijn:\n");
         for (int i = 0; i < possibleCategoryList.size(); i++) {
-            stringBuilder.append(String.format("%s:  %s\n", i + 1, possibleCategoryList.get(i)));
+            stringBuilder.append(String.format("%s:  %s\n", i + 1, possibleCategoryList.get(i).getDescription()));
         }
         return stringBuilder.toString();
     }

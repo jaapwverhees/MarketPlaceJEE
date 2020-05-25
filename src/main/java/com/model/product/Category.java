@@ -34,4 +34,7 @@ public class Category extends AbstractEntity {
     public void removeProduct(Product product){
         products.remove(product);
     }
+    public String toString(){
+        return description;
+    }
 }
