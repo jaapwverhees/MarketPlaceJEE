@@ -18,7 +18,7 @@ import static javax.ejb.TransactionAttributeType.REQUIRES_NEW;
 @Stateless // needed to make it EJB
 public class ProductDAO {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "MyPersistenceUnit")
     private EntityManager entityManager;
 
     public ProductDAO() {

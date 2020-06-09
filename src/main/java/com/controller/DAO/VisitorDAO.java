@@ -3,7 +3,6 @@ package com.controller.DAO;
 import com.model.Visitor;
 import com.util.exeptions.CustomException;
 import com.util.password.PasswordAuthentication;
-import com.util.producers.EntityManagerProducer;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,7 +14,7 @@ public class VisitorDAO {
 
     private final PasswordAuthentication aut = new PasswordAuthentication();
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "MyPersistenceUnit")
     private EntityManager entityManager;
 
     public VisitorDAO() {}
@@ -28,13 +27,13 @@ public class VisitorDAO {
 
         //FIXME
         visitor.setPassword(aut.hash(visitor.getPassword()));
-        try{
+        try {
             entityManager.getTransaction().begin();
             entityManager.persist(visitor);
             entityManager.getTransaction().commit();
-        }catch(RollbackException e){
+        } catch (RollbackException e) {
             throw new CustomException("Emailadres is al in gebruik");
-        }finally {
+        } finally {
             entityManager.detach(visitor);
         }
     }

@@ -15,9 +15,9 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
@@ -27,14 +27,13 @@ import java.util.List;
 import java.util.Set;
 
 @RunWith(Arquillian.class)
-public class ProductDAOTestIT {
+public class ProductDAOIT {
 
     @Inject
     ProductDAO dao;
 
     @Inject
     VisitorDAO visitorDAO;
-
 
     @Deployment
     public static Archive<?> createDeployment() {
@@ -46,8 +45,10 @@ public class ProductDAOTestIT {
                 .addPackage(Product.class.getPackage())
                 .addPackage(CustomException.class.getPackage())
                 .addPackage(PasswordAuthentication.class.getPackage())
-                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+                .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+        // .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+        // .addAsManifestResource("META-INF/beans.xml", "beans.xml");
         System.out.println(archive.toString(true));
         return archive;
     }
@@ -67,7 +68,6 @@ public class ProductDAOTestIT {
         categories.add(new Category("category"));
         Visitor visitor = new Visitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
         visitorDAO.createVisitor(visitor);
-
 
         BigDecimal bigDecimal = new BigDecimal("12.5");
         Product product = new Product("Article", "Description", visitor, deliveryOptions, categories, bigDecimal);
