@@ -18,6 +18,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
@@ -82,25 +83,25 @@ public class ProductDAOIT {
         dao.addArticle(product3);
     }
 
-    @Test
+    @Test @Disabled
     public void getArticleByName() {
         List<Product> list = dao.getProductByName("Article");
         Assertions.assertEquals("Description", list.get(0).getDescription());
     }
 
-    @Test
+    @Test @Disabled
     public void getProductByCategory() {
         List<Product> list = dao.getProductByCategory("category");
         Assertions.assertEquals("Description", list.get(0).getDescription());
     }
 
-    @Test
+    @Test @Disabled
     public void getProductByPriceRangeReturnResultsValidMatches() {
         List<Product> list = dao.getProductByPriceRange(BigDecimal.valueOf(10.0), BigDecimal.valueOf(14.0));
         Assertions.assertEquals(2, list.size());
     }
 
-    @Test
+    @Test @Disabled
     public void getAllProductsReturnsThreeProducts() {
         List<Product> list = dao.getAllProducts();
         Assertions.assertEquals(3, list.size());
@@ -111,7 +112,7 @@ public class ProductDAOIT {
         Assertions.assertEquals(1, dao.getAllCategory().size());
     }
 
-    @Test
+    @Test @Disabled
     public void addANewValidCategory() throws Exception {
         dao.addCategory(new Category("new Category"));
         List<Category> categories = dao.getAllCategory();

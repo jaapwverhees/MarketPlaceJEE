@@ -52,12 +52,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Rest api dep -->
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.1.1</version>
-        </dependency>
+        <!--        &lt;!&ndash;Rest api dep &ndash;&gt;
+                <dependency>
+                    <groupId>javax.ws.rs</groupId>
+                    <artifactId>javax.ws.rs-api</artifactId>
+                    <version>2.1.1</version>
+                </dependency>-->
         <!--stateless annotatie-->
         <dependency>
             <groupId>javax</groupId>
@@ -66,11 +66,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-commons</artifactId>
-            <version>1.5.2</version>
-        </dependency>
+        <!--        <dependency>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-commons</artifactId>
+                    <version>1.5.2</version>
+                </dependency>-->
         <!--Mail service-->
         <dependency>
             <groupId>com.sun.mail</groupId>
@@ -78,11 +78,11 @@
             <version>1.6.2</version>
         </dependency>
         <!--json generation-->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20190722</version>
-        </dependency>
+        <!--        <dependency>
+                    <groupId>org.json</groupId>
+                    <artifactId>json</artifactId>
+                    <version>20190722</version>
+                </dependency>-->
         <!--database management-->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -100,11 +100,11 @@
             <version>8.0.19</version>
         </dependency>
         <!--unknow dependency, util type-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.5</version>
-        </dependency>
+        </dependency>-->
         <!--testing-->
         <dependency>
             <groupId>junit</groupId>
@@ -123,16 +123,16 @@
             <version>3.3.0</version>
         </dependency>
         <!--logging-->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.11.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.11.2</version>
-        </dependency>
+        <!--        <dependency>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                    <version>2.11.2</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-core</artifactId>
+                    <version>2.11.2</version>
+                </dependency>-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
@@ -170,26 +170,45 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
-
-
             <!-- Make sure integration test classes end with 'IT' -->
             <!-- Only integration tests: mvn integration-test -DskipUnitTests-->
             <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.2</version>
+                <groupId>net.wasdev.wlp.maven.plugins</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>3.0.M1</version> <!-- plugin version -->
+                <configuration>
+                    <assemblyArtifact> <!-- Liberty server to run test against -->
+                        <groupId>io.openliberty</groupId>
+                        <artifactId>openliberty-runtime</artifactId>
+                        <version>19.0.0.7</version>
+                        <type>zip</type>
+                    </assemblyArtifact>
+                    <configFile>${project.build.directory}/server.xml</configFile> <!-- Used to run the application -->
+                    <configFile>src/test/resources/server.xml</configFile> <!-- Used to run Arquillian-->
+                </configuration>
                 <executions>
+                    <!-- Create server during package phase for running the application AND Arquillian -->
                     <execution>
-                        <id>run-integration-tests</id>
-                        <phase>integration-test</phase>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
+                            <goal>create-server</goal>
                         </goals>
+                    </execution>
+                    <!-- Used for running the application, not for Arquillian-->
+                    <execution>
+                        <id>deploy-app</id>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <configuration>
+                            <appArchive>${project.basedir}\target\${project.build.finalName}.war</appArchive>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
                 <version>3.0.0</version>
@@ -221,8 +240,9 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
+                <!-- Copy jars to Liberty's /lib -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.1.1</version>
@@ -231,25 +251,24 @@
                     <!-- Bit overkill as they aren't used in all projects, but it keeps the configuration simpler. -->
                     <execution>
                         <id>copy</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>copy-arquillian</id>
                         <phase>pre-integration-test</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
                     </execution>
+                    <!--<execution>
+                        <id>copy-arquillian</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                    </execution>-->
                 </executions>
                 <configuration>
                     <artifactItems>
                         <artifactItem>
                             <groupId>com.h2database</groupId>
                             <artifactId>h2</artifactId>
-                            <version>1.4.200</version>
                             <type>jar</type>
                             <overWrite>false</overWrite>
                             <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared/resources
@@ -269,52 +288,31 @@
                     </artifactItems>
                 </configuration>
             </plugin>
-
             <plugin>
-                <groupId>net.wasdev.wlp.maven.plugins</groupId>
-                <artifactId>liberty-maven-plugin</artifactId>
-                <version>3.0.M1</version> <!-- plugin version -->
-                <configuration>
-                    <assemblyArtifact> <!-- Liberty server to run test against -->
-                        <groupId>io.openliberty</groupId>
-                        <artifactId>openliberty-runtime</artifactId>
-                        <version>19.0.0.10</version>
-                        <type>zip</type>
-                    </assemblyArtifact>
-                    <configFile>src/Itest/resources/server.xml</configFile> <!-- Used to run Arquillian-->
-                </configuration>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.2</version>
                 <executions>
-                    <!-- Create server during package phase for running the application AND Arquillian -->
                     <execution>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>create-server</goal>
-                        </goals>
-                    </execution>
-                    <!-- Used for running the application, not for Arquillian-->
-                    <execution>
-                        <id>deploy-app</id>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                        <configuration>
-                            <appArchive>${project.basedir}\target\${project.build.finalName}.war</appArchive>
-                        </configuration>
+                        <!--<id>run-integration-tests</id>-->
+                        <!--<phase>integration-test</phase>-->
+                        <!--<goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>-->
                     </execution>
                 </executions>
             </plugin>
 
-
             <!--JAVA JAXAX config-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <target>8</target>
-                    <source>8</source>
-                </configuration>
-            </plugin>
+            <!-- <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+                 <version>3.8.1</version>
+                 <configuration>
+                     <target>8</target>
+                     <source>8</source>
+                 </configuration>
+             </plugin>-->
         </plugins>
     </build>
 </project>
