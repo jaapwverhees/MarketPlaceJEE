@@ -46,8 +46,8 @@ public class ProductDAOTestIT {
                 .addPackage(Product.class.getPackage())
                 .addPackage(CustomException.class.getPackage())
                 .addPackage(PasswordAuthentication.class.getPackage())
-                .addAsResource("META-INF/persistence.xml")
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
         System.out.println(archive.toString(true));
         return archive;
     }
