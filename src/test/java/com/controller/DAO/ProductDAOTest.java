@@ -22,9 +22,10 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ProductDAOTest {
 
+    @InjectMocks
+    private final ProductDAO dao = new ProductDAO();
     @Mock
     TypedQuery<Product> queryProductMock;
-
     @Mock
     TypedQuery<Category> queryCategoryMock;
     List<Product> products = new ArrayList<>();
@@ -33,8 +34,6 @@ class ProductDAOTest {
     private EntityManager emMock;
     @Mock
     private EntityTransaction entityTransactionMock;
-    @InjectMocks
-    private final ProductDAO dao = new ProductDAO();
 
     @BeforeEach
     void setup() {
@@ -100,15 +99,8 @@ class ProductDAOTest {
 
     @Test
     void addCategory() {
-        when(emMock.getTransaction()).thenReturn(entityTransactionMock);
-        doNothing().when(entityTransactionMock).begin();
-        doNothing().when(entityTransactionMock).commit();
-
         dao.addCategory(new Category("test"));
 
         verify(emMock).persist(isA(Category.class));
-        verify(emMock, atLeastOnce()).getTransaction();
-        verify(entityTransactionMock).begin();
-        verify(entityTransactionMock).commit();
     }
 }

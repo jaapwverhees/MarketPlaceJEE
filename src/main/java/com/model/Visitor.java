@@ -25,7 +25,7 @@ public class Visitor {
     @NotNull
     private String userName;
 
-    @ElementCollection(targetClass = DeliveryOption.class)
+    @ElementCollection(targetClass = DeliveryOption.class, fetch = FetchType.EAGER)
 //    @JoinTable(name = "delivery_options", joinColumns = @JoinColumn(name = "email"))
     @Enumerated(STRING)
     @NotNull
@@ -129,5 +129,30 @@ public class Visitor {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean valid() {
+        return userNameIsValid() &&
+                deliveryOptionsIsValid() &&
+                emailIsValid(this.email) &&
+                addressIsValid() &&
+                passwordIsValid();
+
+    }
+
+    private boolean passwordIsValid() {
+        return this.password.length() >= 12;
+    }
+
+    private boolean addressIsValid() {
+        return this.address != null || !this.deliveryOptions.contains(DeliveryOption.PICKUPFROMHOME);
+    }
+
+    private boolean deliveryOptionsIsValid() {
+        return !this.deliveryOptions.isEmpty() && (this.deliveryOptions.contains(DeliveryOption.PICKUPFROMHOME) && this.address != null);
+    }
+
+    private boolean userNameIsValid() {
+        return this.userName.length() >= 4;
     }
 }

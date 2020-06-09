@@ -3,7 +3,8 @@
                       http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
-    <persistence-unit name="H2" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="H2" transaction-type="JTA">
+        <jta-data-source>jdbc/h2test</jta-data-source> <!--corresponds with server.xml-->
         <class>com.model.Visitor</class>
         <class>com.model.Address</class>
         <class>com.model.DeliveryOption</class>
@@ -12,15 +13,10 @@
         <class>com.model.product.Service</class>
         <class>com.model.product.Multimedia</class>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
-            <property name="javax.persistence.jdbc.url"    value="jdbc:h2:mem:test" />
-            <property name="javax.persistence.jdbc.user" value="sa" />
-            <property name="javax.persistence.jdbc.password" value="" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="create" />
-            <property name="show_sql" value="false"/>
-            <property name="hibernate.format_sql=false" value="false"/>
-            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>

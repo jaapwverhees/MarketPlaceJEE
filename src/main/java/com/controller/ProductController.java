@@ -1,66 +1,138 @@
 package com.controller;
 
 import com.controller.DAO.ProductDAO;
-import com.model.DeliveryOption;
-import com.model.Visitor;
 import com.model.product.Category;
-import com.model.product.PriceType;
+import com.model.product.MediaType;
 import com.model.product.Product;
 import com.model.product.Service;
-import com.util.exeptions.CustomException;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
+import static javax.ws.rs.core.MediaType.*;
+import static javax.ws.rs.core.Response.Status.*;
 import static org.slf4j.LoggerFactory.getLogger;
 
+@Path("products")
+@Api("products")
 public class ProductController {
 
     private final Logger errorLogger = getLogger(this.getClass());
 
-    @SuppressWarnings("FieldMayBeFinal")
-    private ProductDAO dao = new ProductDAO();
+    @Inject
+    private ProductDAO dao;
 
-    public String addArticle(String name, String description, Visitor supplier, Set<DeliveryOption> deliveryOptions, Set<Category> categories, BigDecimal price) {
+    //TODO check user's credentials
+    @POST
+    public Response addArticle(Product product) {
+        if (!product.valid()) {
+            return badRequestResponse();
+        }
         try {
-            Product product = new Product(name, description, supplier, deliveryOptions, categories, price);
             dao.addArticle(product);
         } catch (Exception e) {
-         return exceptionHandler(e);
+            return exceptionResponse(e);
         }
-        return "toevoegen product succesvol";
+        return succesResponse("toevoegen product succesvol");
     }
 
-    public String addService(String name, String description, Visitor supplier, Set<DeliveryOption> deliveryOptions, Set<Category> categories, BigDecimal price, PriceType priceType) {
-        try {
-            Service product = new Service(name, description, supplier, deliveryOptions, categories, price, priceType);
-            dao.addArticle(product);
-        } catch (Exception e) {
-            return exceptionHandler(e);
+    //TODO check user's credentials
+    @POST
+    @Path("service")
+    public Response addService(Service service) {
+        if (!service.valid() || service.getPriceType() == null) {
+            return badRequestResponse();
         }
-        return "toevoegen product succesvol";
+        try {
+            dao.addArticle(service);
+        } catch (Exception e) {
+            return exceptionResponse(e);
+        }
+        return succesResponse("toevoegen service succesvol");
     }
-    public List<Product> getProductsByName(String name){
+
+    @GET
+    @Path("by/{name}")
+    public List<Product> getProductsByName(@PathParam("name") String name) {
         return dao.getProductByName(name);
     }
 
-    public List<Product> getProductsByPrice(BigDecimal minimum, BigDecimal maximum){
+    @GET
+    @Path("byPrice")
+    public List<Product> getProductsByPrice(@QueryParam("min") BigDecimal minimum, @QueryParam("max") BigDecimal maximum) {
         return dao.getProductByPriceRange(minimum, maximum);
     }
 
-    public List<Product> getProductsByCategory(String description){
+    @GET
+    @Path("byCategory/{category}")
+    public List<Product> getProductsByCategory(@PathParam("category") String description) {
         return dao.getProductByCategory(description);
     }
 
-    public List<Product> getAllProducts(){return dao.getAllProducts();}
+    @GET
+    @Path("all")
+    public List<Product> getAllProducts() {
+        return dao.getAllProducts();
+    }
 
-    public List<Category> getAllCategories(){
+    @GET
+    @Path("allCategories")
+    public List<Category> getAllCategories() {
         return dao.getAllCategory();
     }
 
-    private String exceptionHandler(Exception e) {
-        return "Er heeft een overwachte fout plaatsgevonden: " + e.getMessage();
+    @DELETE
+    public Response delete(Product product) {
+        if (!product.valid()) {
+            return badRequestResponse();
+        }
+        try {
+            dao.deleteArticle(product);
+        } catch (Exception e) {
+            return exceptionResponse(e);
+        }
+        return succesResponse(product.getName() + " is verwijderd");
     }
+
+    //TODO check user's credentials and if id number is valid;
+    @PUT
+    public Response put(Product product) {
+        if (!product.valid()) {
+            return badRequestResponse();
+        }
+        try {
+            dao.updateProduct(product);
+        } catch (Exception e) {
+            return exceptionResponse(e);
+        }
+        return succesResponse(product.getName() + " is geupdate");
+    }
+
+
+    private Response succesResponse(String message) {
+        return Response
+                .status(OK)
+                .entity(message)
+                .build();
+    }
+
+    private Response exceptionResponse(Exception e) {
+        return Response
+                .status(INTERNAL_SERVER_ERROR)
+                .entity(e.getMessage())
+                .build();
+    }
+
+    private Response badRequestResponse() {
+        return Response
+                .status(BAD_REQUEST)
+                .entity("Object was invalid")
+                .build();
+    }
+
 }

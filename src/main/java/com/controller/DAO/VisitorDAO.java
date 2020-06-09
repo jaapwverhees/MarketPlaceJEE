@@ -5,27 +5,25 @@ import com.util.exeptions.CustomException;
 import com.util.password.PasswordAuthentication;
 import com.util.producers.EntityManagerProducer;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.RollbackException;
 
+@Stateless
 public class VisitorDAO {
 
     private final PasswordAuthentication aut = new PasswordAuthentication();
 
-    private EntityManager entityManager = EntityManagerProducer.getEntityManager();
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public VisitorDAO() {}
-
-    public VisitorDAO(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
 
     public Visitor getVisitor(String email) {
         return entityManager.find(Visitor.class, email);
     }
 
-    //TODO bug after creation 2nd visitor in 1 session: A different object with the same identifier value was already associated with the session
     public void createVisitor(Visitor visitor) throws Exception {
 
         visitor.setPassword(aut.hash(visitor.getPassword()));

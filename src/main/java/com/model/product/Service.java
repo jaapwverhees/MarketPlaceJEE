@@ -28,4 +28,5 @@ public class Service extends Product {
     public void setPriceType(PriceType priceType) {
         this.priceType = priceType;
     }
+
 }

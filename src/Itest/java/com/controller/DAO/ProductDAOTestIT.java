@@ -1,29 +1,56 @@
 package com.controller.DAO;
 
+import com.App;
+import com.controller.ProductController;
+import com.model.AbstractEntity;
 import com.model.DeliveryOption;
 import com.model.Visitor;
 import com.model.product.Category;
 import com.model.product.Product;
-import org.h2.util.json.JSONValidationTargetWithoutUniqueKeys;
+import com.util.exeptions.CustomException;
+import com.util.password.PasswordAuthentication;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import javax.persistence.Persistence;
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
-class ProductDAOTestIT {
+@RunWith(Arquillian.class)
+public class ProductDAOTestIT {
 
-    private final ProductDAO dao = new ProductDAO(Persistence.createEntityManagerFactory("H2").createEntityManager());
+    @Inject
+    ProductDAO dao;
 
-    private final VisitorDAO visitorDAO = new VisitorDAO(Persistence.createEntityManagerFactory("H2").createEntityManager());
+    @Inject
+    VisitorDAO visitorDAO;
+
+
+    @Deployment
+    public static Archive<?> createDeployment() {
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
+                .addClass(App.class) // dont forget!
+                .addPackage(ProductDAO.class.getPackage())
+                .addPackage(ProductController.class.getPackage())
+                .addPackage(AbstractEntity.class.getPackage())
+                .addPackage(Product.class.getPackage())
+                .addPackage(CustomException.class.getPackage())
+                .addPackage(PasswordAuthentication.class.getPackage());
+        System.out.println(archive.toString(true));
+        return archive;
+    }
 
     @BeforeEach
-    void setUp() throws Exception {
+    public void setUp() throws Exception {
         String userName = "userjaap";
         String email = "test@test.nl";
         Set<DeliveryOption> deliveryOptions;
@@ -37,7 +64,6 @@ class ProductDAOTestIT {
         categories.add(new Category("category"));
         Visitor visitor = new Visitor(userName, email, deliveryOptions, streetName, streetNumber, suffix, zipcode);
         visitorDAO.createVisitor(visitor);
-
 
 
         BigDecimal bigDecimal = new BigDecimal("12.5");
@@ -54,35 +80,36 @@ class ProductDAOTestIT {
     }
 
     @Test
-    void getArticleByName() {
+    public void getArticleByName() {
         List<Product> list = dao.getProductByName("Article");
         Assertions.assertEquals("Description", list.get(0).getDescription());
     }
 
     @Test
-    void getProductByCategory() {
+    public void getProductByCategory() {
         List<Product> list = dao.getProductByCategory("category");
         Assertions.assertEquals("Description", list.get(0).getDescription());
     }
+
     @Test
-    void getProductByPriceRangeReturnResultsValidMatches() {
+    public void getProductByPriceRangeReturnResultsValidMatches() {
         List<Product> list = dao.getProductByPriceRange(BigDecimal.valueOf(10.0), BigDecimal.valueOf(14.0));
         Assertions.assertEquals(2, list.size());
     }
 
     @Test
-    void getAllProductsReturnsThreeProducts(){
+    public void getAllProductsReturnsThreeProducts() {
         List<Product> list = dao.getAllProducts();
         Assertions.assertEquals(3, list.size());
     }
 
     @Test
-    void getAllCategoryReturnOneResult() {
+    public void getAllCategoryReturnOneResult() {
         Assertions.assertEquals(1, dao.getAllCategory().size());
     }
 
     @Test
-    void addANewValidCategory() throws Exception {
+    public void addANewValidCategory() throws Exception {
         dao.addCategory(new Category("new Category"));
         List<Category> categories = dao.getAllCategory();
         Assertions.assertEquals(2, categories.size());

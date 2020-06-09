@@ -1,47 +1,59 @@
 package com.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.model.AbstractEntity;
 import com.model.DeliveryOption;
 import com.model.Visitor;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Product extends AbstractEntity {
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String description;
 
+    @NotNull
     @ManyToOne
     private Visitor supplier;
 
-    @ElementCollection(targetClass = DeliveryOption.class)
+    @ElementCollection(targetClass = DeliveryOption.class, fetch = EAGER)
     @Enumerated(STRING)
     private Set<DeliveryOption> deliveryOptions;
 
+    @NotNull
     private BigDecimal price;
 
-    @ManyToMany(cascade = ALL)
+    @NotNull
+    @ManyToMany(cascade = ALL, fetch = EAGER)
     private Set<Category> categories = new HashSet<>();
 
     //TODO implement
-    @OneToMany
+    @OneToMany(fetch = EAGER)
     private Set<Multimedia> multimedia = new HashSet<>();
 
-    public Product() {
-    }
-
+    //TODO implement all fields
     public Product(String name, String description, Visitor supplier, Set<DeliveryOption> deliveryOptions, Set<Category> categories, BigDecimal price) {
-        //TODO fix these checkers
-        //if (deliveryOptions.isEmpty()) throw new CustomException("Must contain DeliveryOption");
-        //if(deliveryOptions.contains(PICKUPFROMHOME) && supplier.getAddress().equals(null)) throw new CustomException("");
         this.name = name;
         this.description = description;
         this.supplier = supplier;
@@ -49,37 +61,36 @@ public class Product extends AbstractEntity {
         this.categories = categories;
         this.price = price;
     }
-
-    public BigDecimal getPrice() {
-        return price;
+    //TODO troubleshoot
+    public boolean valid() {
+        return nameIsValid() &&
+                descriptionIsValid() &&
+                //deliveryOptionsIsValid() &&
+                //categoriesIsValid() &&
+                priceIsValid();
     }
 
-    public Set<DeliveryOption> getDeliveryOptions() {
-        return deliveryOptions;
+    private boolean priceIsValid() {
+        return this.price.compareTo(BigDecimal.ZERO) > 0;
     }
 
-    public String getName() {
-        return name;
+    private boolean categoriesIsValid() {
+        return !categories.isEmpty();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    private boolean deliveryOptionsIsValid() {
+        return supplier.getDeliveryOptions().containsAll(deliveryOptions);
     }
 
-    public String getDescription() {
-        return description;
+//    private boolean supplierIsValid() {
+//        return this.supplier.valid();
+//    }
+
+    private boolean descriptionIsValid() {
+        return this.description.length() > 5;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    private boolean nameIsValid() {
+        return this.name.length() > 3;
     }
-
-    public Visitor getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Visitor supplier) {
-        this.supplier = supplier;
-    }
-
 }

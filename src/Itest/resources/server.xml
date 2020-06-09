@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+    <!-- Enable features -->
+    <featureManager>
+        <feature>webProfile-7.0</feature>
+        <feature>localConnector-1.0</feature>
+    </featureManager>
+
+    <!-- keystore and basicRegistry are used to improve startup-->
+    <keyStore id="defaultKeyStore" password="0p3nL1b3ry"/>
+
+    <basicRegistry id="basic" realm="ibm/api">
+        <user name="guest" password="0p3nL1b3ry"/>
+    </basicRegistry>
+
+    <dataSource id="DefaultDataSource" jndiName="jdbc/h2test">
+        <jdbcDriver libraryRef="H2JDBCLib"/>
+        <properties URL="jdbc:h2:mem:test" user="sa" password=""/>
+    </dataSource>
+
+    <library id="H2JDBCLib">
+        <fileset dir="${wlp.install.dir}/usr/shared/resources" includes="h2.jar"/>
+    </library>
+</server>
