@@ -15,9 +15,10 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.runner.RunWith;
 
@@ -54,7 +55,7 @@ public class ProductDAOIT {
         return archive;
     }
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         String userName = "userjaap";
         String email = "test@test.nl";
@@ -83,42 +84,41 @@ public class ProductDAOIT {
         dao.addArticle(product3);
     }
 
-    @Test @Disabled
+    @Test @Ignore
     public void getArticleByName() {
         List<Product> list = dao.getProductByName("Article");
-        Assertions.assertEquals("Description", list.get(0).getDescription());
+        Assert.assertEquals("Description", list.get(0).getDescription());
     }
 
-    @Test @Disabled
+    @Test @Ignore
     public void getProductByCategory() {
         List<Product> list = dao.getProductByCategory("category");
-        Assertions.assertEquals("Description", list.get(0).getDescription());
+        Assert.assertEquals("Description", list.get(0).getDescription());
     }
 
-    @Test @Disabled
+    @Test @Ignore
     public void getProductByPriceRangeReturnResultsValidMatches() {
         List<Product> list = dao.getProductByPriceRange(BigDecimal.valueOf(10.0), BigDecimal.valueOf(14.0));
-        Assertions.assertEquals(2, list.size());
+        Assert.assertEquals(2, list.size());
     }
 
-    @Test @Disabled
+    @Test @Ignore
     public void getAllProductsReturnsThreeProducts() {
         List<Product> list = dao.getAllProducts();
-        Assertions.assertEquals(3, list.size());
+        Assert.assertEquals(3, list.size());
     }
 
     @Test
     public void getAllCategoryReturnOneResult() {
-        Assertions.assertEquals(1, dao.getAllCategory().size());
+        Assert.assertEquals(1, dao.getAllCategory().size());
     }
 
-    @Test @Disabled
+    @Test @Ignore
     public void addANewValidCategory() throws Exception {
         dao.addCategory(new Category("new Category"));
         List<Category> categories = dao.getAllCategory();
-        Assertions.assertEquals(2, categories.size());
-        Assertions.assertTrue(categories.get(0).getDescription().equals("category") || categories.get(1).getDescription().equals("new Category"));
-        Assertions.assertTrue(categories.get(1).getDescription().equals("category") || categories.get(1).getDescription().equals("new Category"));
-
+        Assert.assertEquals(2, categories.size());
+        Assert.assertTrue(categories.get(0).getDescription().equals("category") || categories.get(1).getDescription().equals("new Category"));
+        Assert.assertTrue(categories.get(1).getDescription().equals("category") || categories.get(1).getDescription().equals("new Category"));
     }
 }

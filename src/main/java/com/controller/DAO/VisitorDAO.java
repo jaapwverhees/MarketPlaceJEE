@@ -28,13 +28,13 @@ public class VisitorDAO {
         //FIXME
         visitor.setPassword(aut.hash(visitor.getPassword()));
         try {
-            entityManager.getTransaction().begin();
+            // entityManager.getTransaction().begin();
             entityManager.persist(visitor);
-            entityManager.getTransaction().commit();
+            // entityManager.getTransaction().commit();
         } catch (RollbackException e) {
             throw new CustomException("Emailadres is al in gebruik");
         } finally {
-            entityManager.detach(visitor);
+            // entityManager.detach(visitor);
         }
     }
 }

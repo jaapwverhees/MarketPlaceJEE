@@ -24,7 +24,6 @@ public class ProductDAO {
     public ProductDAO() {
     }
 
-
     //TODO credentials should be checked (better) via session token or something likewise;
     @TransactionAttribute(REQUIRES_NEW)
     public void addArticle(Product product) {
@@ -76,7 +75,6 @@ public class ProductDAO {
         entityManager.persist(category);
     }
 
-
     //TODO credentials should be checked (better) via session token or something likewise;
     @TransactionAttribute(REQUIRES_NEW)
     public void updateProduct(Product product) throws CustomException {
@@ -86,9 +84,9 @@ public class ProductDAO {
         } else if (!product.getSupplier().getUserName().equals(entity.getSupplier().getUserName())) {
             throw new CustomException("invalid customer");
         } else {
-            entityManager.getTransaction().begin();
+            // entityManager.getTransaction().begin();
             entityManager.merge(product);
-            entityManager.getTransaction().commit();
+            // entityManager.getTransaction().commit();
         }
     }
 }
