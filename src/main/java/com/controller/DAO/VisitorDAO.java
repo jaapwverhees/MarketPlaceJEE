@@ -26,6 +26,7 @@ public class VisitorDAO {
 
     public void createVisitor(Visitor visitor) throws Exception {
 
+        //FIXME
         visitor.setPassword(aut.hash(visitor.getPassword()));
         try{
             entityManager.getTransaction().begin();

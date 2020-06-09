@@ -13,6 +13,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +45,9 @@ public class ProductDAOTestIT {
                 .addPackage(AbstractEntity.class.getPackage())
                 .addPackage(Product.class.getPackage())
                 .addPackage(CustomException.class.getPackage())
-                .addPackage(PasswordAuthentication.class.getPackage());
+                .addPackage(PasswordAuthentication.class.getPackage())
+                .addAsResource("META-INF/persistence.xml")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
         System.out.println(archive.toString(true));
         return archive;
     }
